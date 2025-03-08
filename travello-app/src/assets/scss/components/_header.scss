@@ -1,0 +1,25 @@
+@import url("https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;500;600;700;800&family=Leckerli+One&display=swap");
+
+.header {
+  background-color: #006699;
+  padding: 1rem;
+  color: white;
+  .heading {
+    font-family: "Leckerli One", cursive;
+    font-size: 40px;
+  }
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    .nav-links {
+      .nav-link {
+        color: white;
+        text-decoration: none;
+        margin-left: 2rem;
+      }
+    }
+  }
+}
