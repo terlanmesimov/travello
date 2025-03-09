@@ -1,24 +1,41 @@
-@import url("https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;500;600;700;800&family=Leckerli+One&display=swap");
 
 .header {
-  background-color: #006699;
-  padding: 1rem;
-  color: white;
-  .heading {
-    font-family: "Leckerli One", cursive;
-    font-size: 40px;
-  }
-  .nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    .nav-links {
-      .nav-link {
-        color: white;
-        text-decoration: none;
-        margin-left: 2rem;
+  background-color: #003399; 
+  padding: 1rem 0;
+  .container {
+    padding: 0 1rem;
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .heading {
+        font-family: "Leckerli One", cursive;
+        font-size: 40px;
+        font-weight: 700;
+        color: #fff; 
+        margin: 0;
+      }
+      .nav-links {
+        display: flex;
+        gap: 1.5rem;
+        .nav-link {
+          font-family: "Open Sans", sans-serif;
+          font-size: 1rem;
+          color: #fff; // Link rəngi
+          text-decoration: none;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem; // İkon və mətn arası boşluq
+          transition: color 0.3s ease;
+          &:hover {
+            color: #ffc107; // Hover zamanı link rəngi (sarı)
+          }
+          svg {
+            width: 20px; // İkon ölçüsü
+            height: 20px;
+            fill: currentColor; // İkon rəngi link rənginə uyğun olsun
+          }
+        }
       }
     }
   }

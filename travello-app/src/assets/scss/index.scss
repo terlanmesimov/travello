@@ -1,5 +1,11 @@
+// Fonts
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;500;600;700;800&family=Leckerli+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap");
 // Pages
 @import "./pages/home.scss";
+@import "./pages/login.scss";
+@import "./pages/register.scss";
 // Components
 @import "./components/header";
 @import "./components/footer";
@@ -8,9 +14,16 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  text-decoration: none;
+  list-style: none;
   font-family: "Arial", sans-serif;
 }
 
 body {
   background-color: #f5f5f5;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
 }

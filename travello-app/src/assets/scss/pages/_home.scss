@@ -1,61 +1,116 @@
 body {
   //   Search
   .search-section {
-    padding: 2rem;
-    background-color: white;
-    max-width: 1200px;
-    margin: 2rem auto;
-    border-radius: 10px;
-    .search-input {
-      padding: 0.5rem;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      width: 100%;
-      padding: 0.8rem;
-    }
-    .filters {
-      display: flex;
-      gap: 1rem;
-      margin-top: 1rem;
-      select {
-        padding: 0.5rem;
-        border: 1px solid #ddd;
-        border-radius: 5px;
+    background-color: #f8f9fa;
+    padding: 2rem 0;
+    text-align: center;
+    .container {
+      padding: 0 1rem;
+      .search-input {
+        width: 100%;
+        padding: 1rem;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        font-family: "Open Sans", sans-serif;
+        font-size: 1rem;
+        color: #333;
+        margin-bottom: 1.5rem;
+        transition: border-color 0.3s ease;
+        &:focus {
+          border-color: #003399;
+          outline: none;
+        }
+        &::placeholder {
+          color: #666;
+        }
+      }
+      // Filtrlər
+      .filters {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        select {
+          padding: 0.75rem;
+          border: 2px solid #ddd;
+          border-radius: 8px;
+          font-family: "Open Sans", sans-serif;
+          font-size: 1rem;
+          color: #333;
+          background-color: #fff;
+          cursor: pointer;
+          transition: border-color 0.3s ease;
+          &:focus {
+            border-color: #003399;
+            outline: none;
+          }
+        }
       }
     }
   }
   // Map
-  .map-placeholder {
-    height: 400px;
-    background-color: #e0e0e0;
-    margin: 2rem auto;
-    max-width: 1200px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #666;
-  }
-  // Popular Places
-  .places-grid {
-    max-width: 1200px;
-    margin: 2rem auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-    padding: 1rem;
-    .place-card {
-      background-color: white;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      img {
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
+  .map-section {
+    .container {
+      padding: 0 1rem;
+      .map-placeholder {
+        height: 400px;
+        background-color: #e0e0e0;
+        margin: 2rem auto;
+        max-width: 1200px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #666;
       }
-      .place-info {
-        padding: 1rem;
+    }
+  }
+
+  // Places Grid
+  .places-grid {
+    padding: 2rem 0;
+    background-color: #f8f9fa;
+    .container {
+      padding: 0 1rem;
+      .place-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        .place-card {
+          background-color: #fff;
+          border-radius: 8px;
+          overflow: hidden;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          &:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+          }
+          img {
+            min-width: 100%;
+            height: 300px;
+            object-fit: fill;
+          }
+          .place-info {
+            padding: 1rem;
+            h3 {
+              font-family: "Poppins", sans-serif;
+              font-size: 1.5rem;
+              color: #003399;
+              margin-bottom: 0.5rem;
+            }
+            p {
+              font-family: "Open Sans", sans-serif;
+              font-size: 1rem;
+              color: #666;
+              margin-bottom: 1rem;
+            }
+            .place-rating {
+              font-family: "Open Sans", sans-serif;
+              font-size: 1rem;
+              color: #ffc107;
+            }
+          }
+        }
       }
     }
   }

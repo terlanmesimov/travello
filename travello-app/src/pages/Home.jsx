@@ -1,17 +1,17 @@
 // Components
 import Header from "../components/Header";
-import SearchSection from "../components/SearchSection";
+import Search from "../components/Search";
 import Map from "../components/Map";
-import PlaceGridSection from "../components/PlaceGridSection";
+import PlaceGrid from "../components/PlaceGrid";
 import Footer from "../components/Footer";
 
 const Home = () => {
   return (
     <>
       <Header />
-      <SearchSection />
+      <Search />
       <Map />
-      <PlaceGridSection />
+      <PlaceGrid />
       <Footer />
     </>
   );
