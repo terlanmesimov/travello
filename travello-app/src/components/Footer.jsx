@@ -21,17 +21,12 @@ const Footer = () => {
                 </li>
                 <li>
                   <a href="#" className="footer-link">
+                    Blog
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="footer-link">
                     Haqqımızda
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="footer-link">
-                    Xidmətlər
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="footer-link">
-                    Əlaqə
                   </a>
                 </li>
               </ul>

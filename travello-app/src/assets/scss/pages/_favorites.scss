@@ -1,0 +1,78 @@
+.favorites {
+  padding: 4rem 0;
+  background-color: #f8f9fa;
+
+  .container {
+    padding: 0 1rem;
+    .favorites-heading {
+      font-family: "Poppins", sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #003399;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .favorites-grid {
+      display: grid;
+      grid-template-columns: repeat(
+        auto-fit,
+        minmax(300px, 1fr)
+      ); 
+      gap: 2rem; 
+      .favorite-card {
+        background-color: #fff; // Kart arxa plan rəngi
+        border-radius: 8px; // Kart küncləri
+        overflow: hidden; // Şəkilin küncləri yuvarlaq olsun
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); // Kölgə effekti
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+        &:hover {
+          transform: translateY(-5px); // Hover zamanı yuxarı qalxma
+          box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); // Hover zamanı kölgə
+        }
+
+        .favorite-image {
+          width: 100%;
+          height: 200px; // Şəkil hündürlüyü
+          object-fit: cover; // Şəkilin ölçüləri uyğunlaşsın
+        }
+
+        .favorite-info {
+          padding: 1.5rem;
+
+          .favorite-title {
+            font-family: "Poppins", sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #003399; // Başlıq rəngi
+            margin-bottom: 0.5rem;
+          }
+
+          .favorite-description {
+            font-family: "Open Sans", sans-serif;
+            font-size: 0.9rem;
+            color: #666; // Mətn rəngi
+            margin-bottom: 1rem;
+          }
+
+          .favorite-remove {
+            padding: 0.75rem 1.5rem;
+            background-color: #ff4d4d; // Düymə rəngi
+            color: #fff; // Mətn rəngi
+            border: none;
+            border-radius: 8px; // Künclər
+            font-family: "Poppins", sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+              background-color: #cc0000; // Hover zamanı düymə rəngi
+            }
+          }
+        }
+      }
+    }
+  }
+}

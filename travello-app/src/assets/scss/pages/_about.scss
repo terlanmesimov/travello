@@ -1,0 +1,101 @@
+
+.about {
+    padding: 4rem 0;
+    background-color: #f8f9fa;
+  
+    .container {
+      padding: 0 1rem;
+  
+      .about-heading {
+        font-family: 'Poppins', sans-serif;
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #003399;
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+  
+      // Ümumi Məlumat
+      .about-content {
+        margin-bottom: 2rem;
+  
+        .about-text {
+          font-family: 'Open Sans', sans-serif;
+          font-size: 1rem;
+          color: #666; // Mətn rəngi
+          line-height: 1.6;
+          text-align: center;
+        }
+      }
+  
+      // Missiya və Vizyon
+      .about-mission-vision {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); // Responsive grid
+        gap: 2rem; // Kartlar arası boşluq
+        margin-bottom: 2rem;
+  
+        .mission,
+        .vision {
+          background-color: #fff; // Kart arxa plan rəngi
+          padding: 1.5rem;
+          border-radius: 8px; // Kart küncləri
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); // Kölgə effekti
+  
+          .mission-heading,
+          .vision-heading {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #003399; // Başlıq rəngi
+            margin-bottom: 1rem;
+          }
+  
+          .mission-text,
+          .vision-text {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 0.9rem;
+            color: #666; // Mətn rəngi
+            line-height: 1.6;
+          }
+        }
+      }
+  
+      // Əlaqə Məlumatları
+      .about-contact {
+        background-color: #fff; // Arxa plan rəngi
+        padding: 2rem;
+        border-radius: 8px; // Kart küncləri
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); // Kölgə effekti
+  
+        .contact-heading {
+          font-family: 'Poppins', sans-serif;
+          font-size: 1.5rem;
+          font-weight: 600;
+          color: #003399; // Başlıq rəngi
+          margin-bottom: 1.5rem;
+        }
+  
+        .contact-list {
+          list-style: none;
+          padding: 0;
+  
+          .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem; // İkon və mətn arası boşluq
+            margin-bottom: 1rem;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1rem;
+            color: #333; // Mətn rəngi
+  
+            .contact-icon {
+              width: 20px; // İkon ölçüsü
+              height: 20px;
+              fill: #003399; // İkon rəngi
+            }
+          }
+        }
+      }
+    }
+  }

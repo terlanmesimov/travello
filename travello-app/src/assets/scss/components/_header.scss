@@ -1,35 +1,43 @@
 
 .header {
-  background-color: #003399; 
+  background-color: #003399; // Arxa plan rəngi
   padding: 1rem 0;
+
   .container {
     padding: 0 1rem;
+
     .nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
+
       .heading {
-        font-family: "Leckerli One", cursive;
+        font-family: 'Leckerli One', cursive;
         font-size: 40px;
         font-weight: 700;
-        color: #fff; 
+        color: #fff; // Başlıq rəngi
         margin: 0;
+        text-decoration: none;
       }
+
       .nav-links {
         display: flex;
-        gap: 1.5rem;
+        gap: 1.5rem; // Linklər arası boşluq
+
         .nav-link {
-          font-family: "Open Sans", sans-serif;
-          font-size: 1rem;
-          color: #fff; // Link rəngi
-          text-decoration: none;
           display: flex;
           align-items: center;
           gap: 0.5rem; // İkon və mətn arası boşluq
+          font-family: 'Open Sans', sans-serif;
+          font-size: 1rem;
+          color: #fff; // Link rəngi
+          text-decoration: none;
           transition: color 0.3s ease;
+
           &:hover {
             color: #ffc107; // Hover zamanı link rəngi (sarı)
           }
+
           svg {
             width: 20px; // İkon ölçüsü
             height: 20px;

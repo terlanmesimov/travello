@@ -1,0 +1,223 @@
+
+.card-detail {
+  padding: 4rem 0;
+  background-color: #f8f9fa;
+  .container {
+    padding: 0 1rem;
+    .place-images {
+      margin-bottom: 2rem;
+
+      .place-main-image {
+        width: 100%;
+        height: 400px; // Şəkil hündürlüyü
+        object-fit: cover; // Şəkilin ölçüləri uyğunlaşsın
+        border-radius: 8px; // Şəkil küncləri
+        margin-bottom: 1rem;
+      }
+
+      .place-thumbnails {
+        display: flex;
+        gap: 1rem; // Şəkillər arası boşluq
+
+        .place-thumbnail {
+          width: 200px;
+          height: 150px;
+          object-fit: cover; // Şəkilin ölçüləri uyğunlaşsın
+          border-radius: 8px; // Şəkil küncləri
+          cursor: pointer;
+          transition: transform 0.3s ease;
+
+          &:hover {
+            transform: scale(1.05); // Hover zamanı böyüt
+          }
+        }
+      }
+    }
+
+    // Məkan Məlumatları
+    .place-info {
+      background-color: #fff; // Arxa plan rəngi
+      padding: 2rem;
+      border-radius: 8px; // Kart küncləri
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); // Kölgə effekti
+      margin-bottom: 2rem;
+
+      .place-title {
+        font-family: "Poppins", sans-serif;
+        font-size: 2rem;
+        font-weight: 700;
+        color: #003399; // Başlıq rəngi
+        margin-bottom: 1rem;
+      }
+
+      .place-description {
+        font-family: "Open Sans", sans-serif;
+        font-size: 1rem;
+        color: #666; // Mətn rəngi
+        margin-bottom: 1.5rem;
+      }
+
+      .place-rating {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem; // Ulduzlar və reytinq arası boşluq
+        margin-bottom: 1.5rem;
+
+        .rating-stars {
+          font-size: 1.5rem;
+          color: #ffc107; // Ulduz rəngi (sarı)
+        }
+
+        .rating-value {
+          font-family: "Poppins", sans-serif;
+          font-size: 1.25rem;
+          font-weight: 600;
+          color: #003399; // Reytinq rəngi
+        }
+      }
+
+      .place-favorite {
+        padding: 0.75rem 1.5rem;
+        background-color: #003399; // Düymə rəngi
+        color: #fff; // Mətn rəngi
+        border: none;
+        border-radius: 8px; // Künclər
+        font-family: "Poppins", sans-serif;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: #002266; // Hover zamanı düymə rəngi
+        }
+      }
+    }
+
+    // Şərh Bölməsi
+    .place-comments {
+      background-color: #fff; // Arxa plan rəngi
+      padding: 2rem;
+      border-radius: 8px; // Kart küncləri
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); // Kölgə effekti
+
+      .comments-title {
+        font-family: "Poppins", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #003399; // Başlıq rəngi
+        margin-bottom: 1.5rem;
+      }
+
+      // Şərh Formu
+      .comment-form {
+        margin-bottom: 2rem;
+
+        .comment-input {
+          width: 100%;
+          padding: 1rem;
+          border: 2px solid #ddd; // Çərçivə rəngi
+          border-radius: 8px; // Künclər
+          font-family: "Open Sans", sans-serif;
+          font-size: 1rem;
+          color: #333; // Mətn rəngi
+          resize: vertical; // Şaquli olaraq böyüdülə bilər
+          margin-bottom: 1rem;
+
+          &:focus {
+            border-color: #003399; // Fokus zamanı çərçivə rəngi
+            outline: none;
+          }
+
+          &::placeholder {
+            color: #666; // Placeholder rəngi
+          }
+        }
+
+        .comment-rating {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem; // Label və seçim arası boşluq
+          margin-bottom: 1rem;
+
+          .rating-label {
+            font-family: "Open Sans", sans-serif;
+            font-size: 1rem;
+            color: #333; // Label rəngi
+          }
+
+          .rating-select {
+            padding: 0.5rem;
+            border: 2px solid #ddd; // Çərçivə rəngi
+            border-radius: 8px; // Künclər
+            font-family: "Open Sans", sans-serif;
+            font-size: 1rem;
+            color: #333; // Mətn rəngi
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+
+            &:focus {
+              border-color: #003399; // Fokus zamanı çərçivə rəngi
+              outline: none;
+            }
+          }
+        }
+
+        .comment-submit {
+          padding: 0.75rem 1.5rem;
+          background-color: #003399; // Düymə rəngi
+          color: #fff; // Mətn rəngi
+          border: none;
+          border-radius: 8px; // Künclər
+          font-family: "Poppins", sans-serif;
+          font-size: 1rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+
+          &:hover {
+            background-color: #002266; // Hover zamanı düymə rəngi
+          }
+        }
+      }
+
+      // Şərh Listi
+      .comment-list {
+        .comment {
+          background-color: #f8f9fa; // Şərh arxa plan rəngi
+          padding: 1.5rem;
+          border-radius: 8px; // Künclər
+          margin-bottom: 1rem;
+
+          .comment-author {
+            font-family: "Poppins", sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #003399; // İstifadəçi adı rəngi
+            margin-bottom: 0.5rem;
+          }
+
+          .comment-text {
+            font-family: "Open Sans", sans-serif;
+            font-size: 0.9rem;
+            color: #333; // Şərh mətni rəngi
+            margin-bottom: 0.5rem;
+          }
+
+          .comment-rating {
+            font-size: 1rem;
+            color: #ffc107; // Ulduz rəngi (sarı)
+            margin-bottom: 0.5rem;
+          }
+
+          .comment-date {
+            font-family: "Open Sans", sans-serif;
+            font-size: 0.8rem;
+            color: #666; // Tarix rəngi
+            font-style: italic;
+          }
+        }
+      }
+    }
+  }
+}
