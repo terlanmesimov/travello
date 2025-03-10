@@ -1,7 +1,7 @@
 
 .account {
     padding: 4rem 0;
-    background-color: #f8f9fa; // Arxa plan rəngi
+    background-color: #f8f9fa;
   
     .container {
       padding: 0 1rem;
@@ -10,7 +10,7 @@
         font-family: 'Poppins', sans-serif;
         font-size: 2rem;
         font-weight: 700;
-        color: #003399; // Başlıq rəngi
+        color: #003399; 
         text-align: center;
         margin-bottom: 2rem;
       }
@@ -19,41 +19,41 @@
       .account-info {
         display: flex;
         align-items: center;
-        gap: 2rem; // Şəkil və məlumatlar arası boşluq
-        background-color: #fff; // Arxa plan rəngi
+        gap: 2rem; 
+        background-color: #fff; 
         padding: 2rem;
-        border-radius: 8px; // Kart küncləri
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); // Kölgə effekti
+        border-radius: 8px; 
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
         margin-bottom: 2rem;
   
         .profile-picture {
           text-align: center;
   
           .profile-image {
-            width: 150px; // Şəkil ölçüsü
+            width: 150px; 
             height: 150px;
-            border-radius: 50%; // Dairəvi şəkil
-            object-fit: cover; // Şəkilin ölçüləri uyğunlaşsın
+            border-radius: 50%; 
+            object-fit: cover; 
             margin-bottom: 1rem;
           }
   
           .profile-actions {
             display: flex;
-            gap: 0.5rem; // Düymələr arası boşluq
+            gap: 0.5rem; 
   
             .profile-action-button {
               padding: 0.5rem 1rem;
-              background-color: #003399; // Düymə rəngi
-              color: #fff; // Mətn rəngi
+              background-color: #003399; 
+              color: #fff; 
               border: none;
-              border-radius: 8px; // Künclər
+              border-radius: 8px; 
               font-family: 'Open Sans', sans-serif;
               font-size: 0.9rem;
               cursor: pointer;
               transition: background-color 0.3s ease;
   
               &:hover {
-                background-color: #002266; // Hover zamanı düymə rəngi
+                background-color: #002266; 
               }
             }
           }
@@ -64,65 +64,65 @@
             font-family: 'Poppins', sans-serif;
             font-size: 1.5rem;
             font-weight: 600;
-            color: #003399; // İstifadəçi adı rəngi
+            color: #003399; 
             margin-bottom: 0.5rem;
           }
   
           .user-email {
             font-family: 'Open Sans', sans-serif;
             font-size: 1rem;
-            color: #666; // E-poçt rəngi
+            color: #666; 
           }
         }
       }
   
       // Rəylər
       .user-reviews {
-        background-color: #fff; // Arxa plan rəngi
+        background-color: #fff; 
         padding: 2rem;
-        border-radius: 8px; // Kart küncləri
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); // Kölgə effekti
+        border-radius: 8px; 
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
   
         .reviews-heading {
           font-family: 'Poppins', sans-serif;
           font-size: 1.5rem;
           font-weight: 600;
-          color: #003399; // Başlıq rəngi
+          color: #003399; 
           margin-bottom: 1.5rem;
         }
   
         .reviews-list {
           .review {
-            background-color: #f8f9fa; // Rəy arxa plan rəngi
+            background-color: #f8f9fa; 
             padding: 1.5rem;
-            border-radius: 8px; // Künclər
+            border-radius: 8px; 
             margin-bottom: 1rem;
   
             .review-place {
               font-family: 'Poppins', sans-serif;
               font-size: 1.25rem;
               font-weight: 600;
-              color: #003399; // Məkan adı rəngi
+              color: #003399; 
               margin-bottom: 0.5rem;
             }
   
             .review-rating {
               font-size: 1rem;
-              color: #ffc107; // Ulduz rəngi (sarı)
+              color: #ffc107; 
               margin-bottom: 0.5rem;
             }
   
             .review-text {
               font-family: 'Open Sans', sans-serif;
               font-size: 0.9rem;
-              color: #333; // Rəy mətni rəngi
+              color: #333;
               margin-bottom: 0.5rem;
             }
   
             .review-date {
               font-family: 'Open Sans', sans-serif;
               font-size: 0.8rem;
-              color: #666; // Tarix rəngi
+              color: #666; 
               font-style: italic;
             }
           }
