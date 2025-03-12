@@ -30,13 +30,13 @@ const Account = () => {
           <div className="user-reviews">
             <h2 className="reviews-heading">Rəylərim</h2>
             <div className="reviews-list">
+              <Review />
               <div className="review">
                 <div className="review-place">İçərişəhər</div>
                 <div className="review-rating">★★★★☆</div>
                 <div className="review-text">Bu məkan çox gözəldir!</div>
                 <div className="review-date">12 Oktyabr 2023</div>
               </div>
-
               <div className="review">
                 <div className="review-place">Xınalıq</div>
                 <div className="review-rating">★★★★★</div>
@@ -48,6 +48,19 @@ const Account = () => {
         </div>
       </div>
       <Footer />
+    </>
+  );
+};
+
+const Review = (e) => {
+  return (
+    <>
+      <div className="review">
+        <div className="review-place">İçərişəhər</div>
+        <div className="review-rating">★★★★☆</div>
+        <div className="review-text">Bu məkan çox gözəldir!</div>
+        <div className="review-date">12 Oktyabr 2023</div>
+      </div>
     </>
   );
 };

@@ -67,6 +67,7 @@ const CardDetail = () => {
             </div>
 
             <div className="comment-list">
+              <Comment />
               <div className="comment">
                 <div className="comment-author">İstifadəçi Adı</div>
                 <div className="comment-text">Bu məkan çox gözəldir!</div>
@@ -86,6 +87,19 @@ const CardDetail = () => {
         </div>
       </div>
       <Footer />
+    </>
+  );
+};
+
+const Comment = () => {
+  return (
+    <>
+      <div className="comment">
+        <div className="comment-author">İstifadəçi Adı</div>
+        <div className="comment-text">Bu məkan çox gözəldir!</div>
+        <div className="comment-rating">★★★★☆</div>
+        <div className="comment-date">12 Oktyabr 2023</div>
+      </div>
     </>
   );
 };

@@ -72,6 +72,7 @@ const BlogDetail = () => {
           <div className="related-posts">
             <h2 className="related-posts-title">Əlaqəli Məqalələr</h2>
             <div className="related-posts-grid">
+              <RelatedPost />
               <div className="related-post">
                 <img
                   src="https://via.placeholder.com/300x200"
@@ -103,6 +104,24 @@ const BlogDetail = () => {
         </div>
       </div>
       <Footer />
+    </>
+  );
+};
+
+const RelatedPost = () => {
+  return (
+    <>
+      <div className="related-post">
+        <img
+          src="https://via.placeholder.com/300x200"
+          alt="Şəki Xan Sarayı"
+          className="related-post-image"
+        />
+        <h3 className="related-post-title">Şəki Xan Sarayı: Tarixi Abidə</h3>
+        <a href="#" className="related-post-link">
+          Ətraflı Oxu
+        </a>
+      </div>
     </>
   );
 };

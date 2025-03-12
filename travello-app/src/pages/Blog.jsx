@@ -12,8 +12,8 @@ const Blog = () => {
           <p className="blog-subheading">
             Səyahət məqalələri, tövsiyələr, tədbirlər və xəbərlər.
           </p>
-
           <div className="blog-posts">
+            <BlogPost />
             <div className="blog-post">
               <img
                 src="https://via.placeholder.com/400x250"
@@ -70,6 +70,27 @@ const Blog = () => {
       </div>
       <Footer />
     </>
+  );
+};
+
+const BlogPost = () => {
+  return (
+    <div className="blog-post">
+      <img
+        src="https://via.placeholder.com/400x250"
+        alt="Bakıda Səyahət"
+        className="blog-image"
+      />
+      <div className="blog-content">
+        <h3 className="blog-title">Bakıda Səyahət Üçün Tövsiyələr</h3>
+        <p className="blog-excerpt">
+          Bakının ən gözəl yerlərini kəşf edin və unudulmaz təcrübələr yaşayın.
+        </p>
+        <a href="#" className="blog-link">
+          Ətraflı Oxu
+        </a>
+      </div>
+    </div>
   );
 };
 
