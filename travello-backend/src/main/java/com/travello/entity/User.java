@@ -10,26 +10,18 @@ import java.util.List;
 @Entity
 @Table(name = "user")
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String username;
-
     private String email;
-
     private String password;
-
     @Lob
     @Column(columnDefinition = "MEDIUMBLOB")
-    private byte[] profilePicture;
-
+    private byte[] image;
     @OneToMany(mappedBy = "user")
-    private List<Place> favorites;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Comment> yourComments;
+    private List<Comment> comments;
 }
