@@ -3,6 +3,8 @@ package com.travello.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "region")
 @Data
@@ -11,9 +13,10 @@ import lombok.*;
 public class Region {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
+    private Long id;
 
-    @Column(name = "name", nullable = false)
     private String name;
+
+    @OneToMany(mappedBy = "region", cascade = CascadeType.ALL)
+    private List<Place> places;
 }

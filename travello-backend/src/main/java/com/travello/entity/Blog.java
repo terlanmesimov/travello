@@ -14,32 +14,24 @@ import java.util.List;
 public class Blog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
+    private Long id;
 
-    @Column(name = "name")
     private String name;
 
-    @Column(name = "author")
     private String author;
 
-    @Column(name = "date")
     @Temporal(TemporalType.DATE)
     private Date date;
 
-    @Column(name = "description")
     private String description;
 
     @Lob
-    @Column(name = "image", columnDefinition = "MEDIUMBLOB")
+    @Column(columnDefinition = "MEDIUMBLOB")
     private byte[] image;
 
-    @Column(name = "places")
     private List<Place> places;
 
-    @Column(name = "comments")
+    @OneToMany(mappedBy = "blog", cascade = CascadeType.ALL)
     private List<Comment> comments;
 
-    @Column(name = "related_blogs")
-    private List<Blog> relatedBlogs;
 }

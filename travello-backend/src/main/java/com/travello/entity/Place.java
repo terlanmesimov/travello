@@ -15,22 +15,31 @@ import java.util.List;
 public class Place {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
+    private Long id;
 
-    @Column(name = "name")
     private String name;
 
-    @Column(name = "description")
+    @ManyToOne
+    @JoinColumn(name = "region_id")
+    private Region region;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
     private String description;
 
-    @Column(name = "rating")
     private String rate;
 
-    @Column(name = "comments")
+    @OneToMany(mappedBy = "place", cascade = CascadeType.ALL)
     private List<Comment> comments;
 
     @Lob
-    @Column(name = "image" , columnDefinition = "MEDIUMBLOB")
+    @Column(name = "image", columnDefinition = "MEDIUMBLOB")
     private byte[] image;
+
+    @ManyToOne
+    @JoinColumn(name = "favorites")
+    private User user;
+
 }

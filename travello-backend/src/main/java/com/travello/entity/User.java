@@ -15,22 +15,21 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
+    private Long id;
 
-    @Column(name = "username")
     private String username;
 
-    @Column(name = "email")
     private String email;
 
-    @Column(name = "password")
     private String password;
 
     @Lob
-    @Column(name = "profile_picture", columnDefinition = "MEDIUMBLOB")
+    @Column(columnDefinition = "MEDIUMBLOB")
     private byte[] profilePicture;
 
-    @Column(name = "favorites")
-    private List<Place> places;
+    @OneToMany(mappedBy = "user")
+    private List<Place> favorites;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Comment> yourComments;
 }
