@@ -1,6 +1,5 @@
 package com.travello.entity;
 
-import com.travello.entity.embedded.Location;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,6 +14,4 @@ public class PlaceComment extends Comment {
     @JoinColumn(name = "place_id")
     private Place place;
     private Double rating;
-    @Embedded
-    private Location location;
 }
