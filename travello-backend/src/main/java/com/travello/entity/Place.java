@@ -1,5 +1,6 @@
 package com.travello.entity;
 
+import com.travello.entity.embedded.Location;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -37,5 +38,7 @@ public class Place {
             inverseJoinColumns = @JoinColumn(name = "blog_id")
     )
     private List<Blog> blogs;
+    @Embedded
+    private Location location;
 
 }
