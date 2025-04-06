@@ -1,14 +1,15 @@
 package com.travello.dto.request;
 
-import com.travello.entity.Category;
-import com.travello.entity.Region;
-import com.travello.entity.embedded.Location;
+import lombok.Data;
 
+@Data
 public class PlaceRequestDTO {
     private String name;
-    private Category category;
-    private Region region;
+    private Long regionId;
+    private Long categoryId;
     private String description;
-    private byte[] image;
-    private Location location;
+    private Double rating;
+    private String image;
+    private Double latitude;
+    private Double longitude;
 }

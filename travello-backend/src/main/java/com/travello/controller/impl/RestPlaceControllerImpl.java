@@ -28,7 +28,7 @@ public class RestPlaceControllerImpl implements RestPlaceController {
     }
 
     @Override
-    @GetMapping("/get/{id}")
+    @GetMapping("/get-by-id/{id}")
     public PlaceResponseDTO getPlaceById(@PathVariable Long id) {
         return placeService.getPlaceById(id);
     }

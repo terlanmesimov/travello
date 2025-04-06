@@ -1,18 +1,19 @@
 package com.travello.dto.response;
 
-import com.travello.entity.Category;
-import com.travello.entity.PlaceComment;
-import com.travello.entity.Region;
-import com.travello.entity.embedded.Location;
-
+import lombok.Data;
 import java.util.List;
 
+@Data
 public class PlaceResponseDTO {
+    private Long id;
     private String name;
-    private Region region;
-    private Category category;
+    private String regionName;
+    private String categoryName;
     private String description;
-    private byte[] image;
-    private Location location;
-    private List<PlaceComment> comments;
+    private Double rating;
+    private List<String> comments;
+    private String imageBase64;
+    private List<Long> blogIds;
+    private Double latitude;
+    private Double longitude;
 }

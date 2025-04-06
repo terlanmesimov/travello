@@ -2,8 +2,6 @@ package com.travello.controller;
 
 import com.travello.dto.request.PlaceRequestDTO;
 import com.travello.dto.response.PlaceResponseDTO;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.List;
 
