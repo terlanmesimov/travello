@@ -1,5 +1,6 @@
 package com.travello.dto.response;
 
+import com.travello.entity.embedded.Location;
 import lombok.Data;
 import java.util.List;
 
@@ -14,6 +15,5 @@ public class PlaceResponseDTO {
     private List<String> comments;
     private String imageBase64;
     private List<Long> blogIds;
-    private Double latitude;
-    private Double longitude;
+    private Location location;
 }

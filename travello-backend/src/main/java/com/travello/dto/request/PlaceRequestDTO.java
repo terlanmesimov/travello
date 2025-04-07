@@ -1,5 +1,6 @@
 package com.travello.dto.request;
 
+import com.travello.entity.embedded.Location;
 import lombok.Data;
 
 @Data
@@ -10,6 +11,5 @@ public class PlaceRequestDTO {
     private String description;
     private Double rating;
     private String image;
-    private Double latitude;
-    private Double longitude;
+    private Location location;
 }
