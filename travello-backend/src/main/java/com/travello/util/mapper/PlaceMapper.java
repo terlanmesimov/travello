@@ -11,6 +11,9 @@ import com.travello.repository.RegionRepository;
 import com.travello.util.ImageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class PlaceMapper {
     @Autowired
@@ -42,6 +45,14 @@ public class PlaceMapper {
         response.setRegionName(returnedDatabasePlace.getRegion().getName());
         response.setLocation(new Location(returnedDatabasePlace.getLocation().getLatitude(), returnedDatabasePlace.getLocation().getLongitude()));
         response.setImageBase64(ImageUtil.encodeImageToBase64String(returnedDatabasePlace.getImage()));
+        return response;
+    }
+
+    public List<PlaceResponseDTO> mapToResponseDTOList (List<Place> placeList ) {
+        List<PlaceResponseDTO> response = new ArrayList<>();
+        for (Place place : placeList){
+            response.add(mapToResponse(place));
+        }
         return response;
     }
 }

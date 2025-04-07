@@ -6,13 +6,10 @@ import com.travello.entity.Place;
 import com.travello.repository.PlaceRepository;
 import com.travello.service.PlaceService;
 import com.travello.util.mapper.PlaceMapper;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PlaceServiceImpl implements PlaceService {
@@ -21,8 +18,6 @@ public class PlaceServiceImpl implements PlaceService {
     private PlaceRepository placeRepository;
     @Autowired
     private PlaceMapper placeMapper;
-    @Autowired
-    private ModelMapper modelMapper;
 
     @Override
     public PlaceResponseDTO savePlace(PlaceRequestDTO placeRequestDTO) {
@@ -33,22 +28,13 @@ public class PlaceServiceImpl implements PlaceService {
 
     @Override
     public List<PlaceResponseDTO> getPlaceList() {
-        List<PlaceResponseDTO> response = new ArrayList<>();
         List<Place> placeList = placeRepository.findAll();
-        for (Place place : placeList) {
-            response.add(modelMapper.map(place, PlaceResponseDTO.class));
-        }
-        return response;
+        return placeMapper.mapToResponseDTOList(placeList);
     }
 
     @Override
     public PlaceResponseDTO getPlaceById(Long id) {
-        Optional<Place> optional = placeRepository.findById(id);
-        if (optional.isPresent()) {
-            PlaceResponseDTO response = modelMapper.map(optional.get(), PlaceResponseDTO.class);
-            return response;
-        }
-        return null;
+        return placeMapper.mapToResponse(placeRepository.findById(id).orElseThrow());
     }
 
     @Override
@@ -60,9 +46,20 @@ public class PlaceServiceImpl implements PlaceService {
 
     @Override
     public PlaceResponseDTO updatePlace(Long id, PlaceRequestDTO placeRequestDTO) {
-        Place place = modelMapper.map(placeRequestDTO, Place.class);
+        Place place = placeMapper.mapToPlace(placeRequestDTO);
         place.setId(id);
-        PlaceResponseDTO response = modelMapper.map(placeRepository.save(place), PlaceResponseDTO.class);
-        return response;
+        return placeMapper.mapToResponse(placeRepository.save(place));
+    }
+
+    @Override
+    public List<PlaceResponseDTO> getFilteredPlaceList(Long regionId, Long categoryId, Double rating) {
+        List<Place> placeList = placeRepository.findByFilters(regionId, categoryId, rating);
+        return placeMapper.mapToResponseDTOList(placeList);
+    }
+
+    @Override
+    public List<PlaceResponseDTO> searchByName(String placeName) {
+        List<Place> placeList = placeRepository.searchByName(placeName);
+        return placeMapper.mapToResponseDTOList(placeList);
     }
 }
