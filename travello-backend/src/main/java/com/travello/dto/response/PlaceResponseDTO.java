@@ -14,6 +14,5 @@ public class PlaceResponseDTO {
     private Double rating;
     private List<String> comments;
     private String imageBase64;
-    private List<Long> blogIds;
     private Location location;
 }

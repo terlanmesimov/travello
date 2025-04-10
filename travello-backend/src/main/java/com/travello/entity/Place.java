@@ -31,12 +31,7 @@ public class Place {
     @Lob
     @Column(columnDefinition = "MEDIUMBLOB")
     private byte[] image;
-    @ManyToMany
-    @JoinTable(
-            name = "place_blog",
-            joinColumns = @JoinColumn(name = "place_id"),
-            inverseJoinColumns = @JoinColumn(name = "blog_id")
-    )
+    @ManyToMany(mappedBy = "places")
     private List<Blog> blogs;
     @Embedded
     private Location location;

@@ -40,8 +40,7 @@ public class PlaceServiceImpl implements PlaceService {
     @Override
     public boolean deletePlace(Long id) {
         placeRepository.deleteById(id);
-        boolean isDeleted = placeRepository.findById(id).isEmpty();
-        return isDeleted;
+        return !placeRepository.existsById(id);
     }
 
     @Override

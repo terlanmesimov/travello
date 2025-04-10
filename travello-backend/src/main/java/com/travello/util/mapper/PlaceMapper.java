@@ -10,11 +10,12 @@ import com.travello.repository.CategoryRepository;
 import com.travello.repository.RegionRepository;
 import com.travello.util.ImageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Component
 public class PlaceMapper {
     @Autowired
     private RegionRepository regionRepository;
@@ -35,16 +36,16 @@ public class PlaceMapper {
         return place;
     }
     
-    public PlaceResponseDTO mapToResponse(Place returnedDatabasePlace) {
+    public PlaceResponseDTO mapToResponse(Place place) {
         PlaceResponseDTO response = new PlaceResponseDTO();
-        response.setId(returnedDatabasePlace.getId());
-        response.setName(returnedDatabasePlace.getName());
-        response.setDescription(returnedDatabasePlace.getDescription());
-        response.setRating(returnedDatabasePlace.getRating());
-        response.setCategoryName(returnedDatabasePlace.getCategory().getName());
-        response.setRegionName(returnedDatabasePlace.getRegion().getName());
-        response.setLocation(new Location(returnedDatabasePlace.getLocation().getLatitude(), returnedDatabasePlace.getLocation().getLongitude()));
-        response.setImageBase64(ImageUtil.encodeImageToBase64String(returnedDatabasePlace.getImage()));
+        response.setId(place.getId());
+        response.setName(place.getName());
+        response.setDescription(place.getDescription());
+        response.setRating(place.getRating());
+        response.setCategoryName(place.getCategory().getName());
+        response.setRegionName(place.getRegion().getName());
+        response.setLocation(new Location(place.getLocation().getLatitude(), place.getLocation().getLongitude()));
+        response.setImageBase64(ImageUtil.encodeImageToBase64String(place.getImage()));
         return response;
     }
 

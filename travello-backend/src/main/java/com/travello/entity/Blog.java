@@ -19,11 +19,17 @@ public class Blog {
     private Long id;
     private String name;
     private String author;
+    private String description;
     private LocalDate createdAt;
     @Lob
     @Column(columnDefinition = "MEDIUMBLOB")
     private byte[] image;
-    @ManyToMany(mappedBy = "blogs")
+    @ManyToMany
+    @JoinTable(
+            name = "place_blog",
+            joinColumns = @JoinColumn(name = "blog_id"),
+            inverseJoinColumns = @JoinColumn(name = "place_id")
+    )
     private List<Place> places;
     @OneToMany(mappedBy = "blog")
     private List<BlogComment> comments;
