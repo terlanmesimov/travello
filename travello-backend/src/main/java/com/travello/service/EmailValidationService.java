@@ -11,10 +11,9 @@ public class EmailValidationService {
     @Autowired
     private HunterConfig hunterConfig;
     private final RestTemplate restTemplate = new RestTemplate();
-    private final String hunterApiKey = hunterConfig.getApiKey();
 
     public boolean isEmailValid(String email) {
-        String url = "https://api.hunter.io/v2/email-verifier?email=" + email + "&api_key=" + hunterApiKey;
+        String url = "https://api.hunter.io/v2/email-verifier?email=" + email + "&api_key=" + hunterConfig.getApiKey();
         try {
             HunterEmailVericifationResponse response = restTemplate.getForObject(url, HunterEmailVericifationResponse.class);
             String result = response.getData().getStatus();

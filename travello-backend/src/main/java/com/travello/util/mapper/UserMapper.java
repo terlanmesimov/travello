@@ -24,7 +24,7 @@ public class UserMapper {
         UserResponseDTO response = new UserResponseDTO();
         response.setEmail(user.getEmail());
         response.setUsername(user.getUsername());
-        response.setImageBase64(ImageUtil.encodeImageToBase64String(user.getImage()));
+//        response.setImageBase64(ImageUtil.encodeImageToBase64String(user.getImage()));
         return response;
     }
 }
