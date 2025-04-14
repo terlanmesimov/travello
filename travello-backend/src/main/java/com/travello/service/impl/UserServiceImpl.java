@@ -5,12 +5,14 @@ import com.travello.entity.User;
 import com.travello.repository.UserRepository;
 import com.travello.service.EmailValidationService;
 import com.travello.service.UserService;
+import com.travello.util.ImageUtil;
 import com.travello.util.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -40,12 +42,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean changeImage(String imageBase64) {
-        return false;
+    public String changeImage(Long id, String imageBase64) {
+        User user = userRepository.findById(id).orElseThrow();
+        user.setImage(ImageUtil.decodeImageToBytes(imageBase64));
+        String newImage = ImageUtil.encodeImageToBase64String(userRepository.save(user).getImage());
+        return newImage;
     }
 
     @Override
-    public boolean changePassword(String newPassword) {
+    public boolean changePassword(Long id, String currentPassword, String newPassword) {
+        if (Objects.equals(passwordEncoder.encode(currentPassword),
+                userRepository.findById(id).orElseThrow().getPassword())) {
+            User user = userRepository.findById(id).orElseThrow();
+            user.setPassword(newPassword);
+            return true;
+        }
         return false;
     }
 }

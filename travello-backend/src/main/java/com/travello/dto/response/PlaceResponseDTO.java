@@ -12,7 +12,7 @@ public class PlaceResponseDTO {
     private String categoryName;
     private String description;
     private Double rating;
-    private List<String> comments;
+    private List<CommentResponseDTO> comments;
     private String imageBase64;
     private Location location;
 }

@@ -1,5 +1,6 @@
 package com.travello.entity;
 
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -13,6 +14,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@DiscriminatorValue("blog")
 public class BlogComment extends Comment {
     @ManyToOne
     @JoinColumn(name = "blog_id")

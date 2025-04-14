@@ -1,6 +1,7 @@
 package com.travello.util.mapper;
 
 import com.travello.dto.request.PlaceRequestDTO;
+import com.travello.dto.response.CommentResponseDTO;
 import com.travello.dto.response.PlaceResponseDTO;
 import com.travello.entity.Category;
 import com.travello.entity.Place;
@@ -21,6 +22,8 @@ public class PlaceMapper {
     private RegionRepository regionRepository;
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private CommentMapper commentMapper;
 
     public Place mapToPlace(PlaceRequestDTO request){
         Place place = new Place();
@@ -46,6 +49,9 @@ public class PlaceMapper {
         response.setRegionName(place.getRegion().getName());
         response.setLocation(new Location(place.getLocation().getLatitude(), place.getLocation().getLongitude()));
         response.setImageBase64(ImageUtil.encodeImageToBase64String(place.getImage()));
+        List<CommentResponseDTO> comments = new ArrayList<>();
+        place.getComments().forEach(placeComment -> comments.add(commentMapper.mapToResponse(placeComment)));
+        response.setComments(comments);
         return response;
     }
 

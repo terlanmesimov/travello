@@ -1,11 +1,13 @@
 package com.travello.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.JOINED)
+@Data
 public abstract class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,5 +16,5 @@ public abstract class Comment {
     @JoinColumn(name = "user_id")
     private User user;
     private String text;
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
 }

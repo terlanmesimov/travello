@@ -9,6 +9,7 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@DiscriminatorValue("place")
 public class PlaceComment extends Comment {
     @ManyToOne
     @JoinColumn(name = "place_id")

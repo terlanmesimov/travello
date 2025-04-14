@@ -25,12 +25,14 @@ public class RestUserControllerImpl implements RestUserController {
     }
 
     @Override
-    public boolean changeImage(@RequestBody String imageBase64) {
-        return userService.changeImage(imageBase64);
+    @PutMapping("/change-profile-photo/{id}")
+    public String changeImage(@PathVariable Long id, @RequestBody String imageBase64) {
+        return userService.changeImage(id, imageBase64);
     }
 
     @Override
-    public boolean changePassword(@RequestParam String newPassword) {
-        return userService.changePassword(newPassword);
+    @PutMapping("/change-password/{id}")
+    public boolean changePassword(@PathVariable Long id,@RequestParam String currentPassword, @RequestParam String newPassword) {
+        return userService.changePassword(id, currentPassword, newPassword);
     }
 }

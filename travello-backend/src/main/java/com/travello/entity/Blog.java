@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -20,7 +20,7 @@ public class Blog {
     private String name;
     private String author;
     private String description;
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
     @Lob
     @Column(columnDefinition = "MEDIUMBLOB")
     private byte[] image;
