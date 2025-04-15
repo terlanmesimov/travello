@@ -19,6 +19,7 @@ public class Blog {
     private Long id;
     private String name;
     private String author;
+    @Column(columnDefinition = "TEXT")
     private String description;
     private LocalDateTime createdAt;
     @Lob
