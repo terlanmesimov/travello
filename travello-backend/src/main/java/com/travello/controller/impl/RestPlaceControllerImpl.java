@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/rest/api/place")
+@CrossOrigin(origins = "http://localhost:3000")
 public class RestPlaceControllerImpl implements RestPlaceController {
     @Autowired
     private PlaceService placeService;
