@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/rest/api/user")
+@CrossOrigin(origins = "http://localhost:3000")
 public class RestUserControllerImpl implements RestUserController {
     @Autowired
     private UserService userService;

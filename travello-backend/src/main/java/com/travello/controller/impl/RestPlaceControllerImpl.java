@@ -55,7 +55,7 @@ public class RestPlaceControllerImpl implements RestPlaceController {
     }
 
     @Override
-    @GetMapping("search")
+    @GetMapping("/search")
     public List<PlaceResponseDTO> searchByName(@RequestParam(name = "place-name") String placeName) {
         return placeService.searchByName(placeName);
     }

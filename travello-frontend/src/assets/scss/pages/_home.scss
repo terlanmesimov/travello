@@ -44,6 +44,21 @@ body {
             outline: none;
           }
         }
+        button {
+          font-family: "Open Sans", sans-serif;
+          font-size: 1rem;
+          color: #fff;
+          background-color: #003399;
+          border: 2px solid #ddd;
+          border-radius: 8px;
+          padding: 0.75rem 1.5rem;
+          &:hover {
+            color: #003399;
+            background-color: #fff;
+            border-color: #003399;
+            transition: 0.2s;
+          }
+        }
       }
     }
   }

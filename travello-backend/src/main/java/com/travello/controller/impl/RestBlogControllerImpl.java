@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/rest/api/blog")
+@CrossOrigin(origins = "http://localhost:3000")
 public class RestBlogControllerImpl implements RestBlogController {
 
     @Autowired

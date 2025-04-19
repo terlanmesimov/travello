@@ -1,6 +1,12 @@
-import { GoogleMap, InfoWindow, LoadScript, Marker } from "@react-google-maps/api";
+import {
+  GoogleMap,
+  InfoWindow,
+  LoadScript,
+  Marker,
+} from "@react-google-maps/api";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const containerStyle = {
   width: "100%",
@@ -14,6 +20,8 @@ const center = {
 };
 
 const Map = () => {
+  const navigate = useNavigate();
+
   const [places, setPlaces] = useState([]);
   const [selectedPlace, setSelectedPlace] = useState(null);
 
@@ -28,7 +36,9 @@ const Map = () => {
     <div className="map-section">
       <div className="container">
         <div className="map-placeholder">
-          <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
+          <LoadScript
+            googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
+          >
             <GoogleMap
               mapContainerStyle={containerStyle}
               center={center}
@@ -53,7 +63,23 @@ const Map = () => {
                   onCloseClick={() => setSelectedPlace(null)}
                 >
                   <div>
-                    <h3>{selectedPlace.name}</h3>
+                    <img
+                      src={`data:image/jpeg;base64,${selectedPlace.imageBase64}`}
+                      alt={selectedPlace.name}
+                      style={{
+                        width: "200px",
+                        height: "auto",
+                        borderRadius: "12px",
+                      }}
+                    />
+                    <h3
+                      onClick={() => {
+                        navigate(`/card-detail/${selectedPlace.id}`);
+                      }}
+                      
+                    >
+                      {selectedPlace.name}
+                    </h3>
                     <p>{selectedPlace.description}</p>
                   </div>
                 </InfoWindow>
