@@ -4,14 +4,17 @@ import Search from "../components/Search";
 import Map from "../components/Map";
 import PlaceGrid from "../components/PlaceGrid";
 import Footer from "../components/Footer";
+import { useState } from "react";
 
 const Home = () => {
+  const [resultData, setResultData] = useState([]);
+
   return (
     <>
       <Header />
-      <Search />
+      <Search setResultData={setResultData} />
       <Map />
-      <PlaceGrid />
+      <PlaceGrid resultData={resultData} />
       <Footer />
     </>
   );

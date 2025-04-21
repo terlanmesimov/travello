@@ -15,17 +15,17 @@ const Footer = () => {
               <h4 className="footer-subheading">Səhifələr</h4>
               <ul className="footer-links">
                 <li>
-                  <a href="#" className="footer-link">
+                  <a href="/" className="footer-link">
                     Ana Səhifə
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="footer-link">
+                  <a href="/blog" className="footer-link">
                     Blog
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="footer-link">
+                  <a href="/about" className="footer-link">
                     Haqqımızda
                   </a>
                 </li>

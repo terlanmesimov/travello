@@ -1,0 +1,37 @@
+.not-found {
+    text-align: center;
+    margin-top: 10%;
+  
+    h1 {
+      font-size: 100px;
+      font-weight: bold;
+      color: #ff4a4a;
+    }
+  
+    h2 {
+      font-size: 24px;
+      color: #333;
+    }
+  
+    p {
+      font-size: 18px;
+      color: #666;
+    }
+  
+    .back-home {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #ff4a4a;
+      color: white;
+      font-size: 16px;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: 0.3s;
+  
+      &:hover {
+        background: #cc0000;
+      }
+    }
+  }
+  

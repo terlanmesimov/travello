@@ -1,7 +1,23 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import RenderStars from "../utils/StarUtil";
 
 const CardDetail = () => {
+  const { id } = useParams();
+  const [placeData, setPlaceData] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_REST_API_URL}/place/get-by-id/${id}`)
+      .then((response) => {
+        setPlaceData(response.data);
+      })
+      .catch((error) => console.error(error));
+  }, [id]);
+
   return (
     <>
       <Header />
@@ -9,38 +25,19 @@ const CardDetail = () => {
         <div className="container">
           <div className="place-images">
             <img
-              src="https://via.placeholder.com/800x400"
-              alt="İçərişəhər"
+              src={`data:image/jpeg;base64,${placeData.imageBase64}`}
+              alt={placeData.name}
               className="place-main-image"
             />
-            <div className="place-thumbnails">
-              <img
-                src="https://via.placeholder.com/200x150"
-                alt="İçərişəhər 1"
-                className="place-thumbnail"
-              />
-              <img
-                src="https://via.placeholder.com/200x150"
-                alt="İçərişəhər 2"
-                className="place-thumbnail"
-              />
-              <img
-                src="https://via.placeholder.com/200x150"
-                alt="İçərişəhər 3"
-                className="place-thumbnail"
-              />
-            </div>
           </div>
-
           <div className="place-info">
-            <h1 className="place-title">İçərişəhər</h1>
-            <p className="place-description">
-              İçərişəhər, Bakının tarixi mərkəzidir. Burada Qız Qalası,
-              Şirvanşahlar Sarayı kimi məşhur abidələri ziyarət edə bilərsiniz.
-            </p>
+            <h1 className="place-title">{placeData.name}</h1>
+            <p className="place-description">{placeData.description}</p>
             <div className="place-rating">
-              <span className="rating-stars">★★★★☆</span>
-              <span className="rating-value">4.5</span>
+              <span className="rating-stars">
+                <RenderStars rating={placeData.rating ? placeData.rating : 0} />
+              </span>
+              <span className="rating-value">{placeData.rating}</span>
             </div>
             <button className="place-favorite">Favoritlərə Əlavə Et</button>
           </div>

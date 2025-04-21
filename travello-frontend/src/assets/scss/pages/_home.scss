@@ -24,12 +24,15 @@ body {
           color: #666;
         }
       }
-      // Filtrlər
       .filters {
         display: flex;
+        flex-wrap: wrap;
         justify-content: center;
         gap: 1rem;
         select {
+          flex: 1 1 auto;
+          min-width: 150px;
+          max-width: 300px;
           padding: 0.75rem;
           border: 2px solid #ddd;
           border-radius: 8px;
@@ -45,19 +48,54 @@ body {
           }
         }
         button {
+          flex: 1 1 auto;
+          min-width: 150px;
+          padding: 0.75rem 1.5rem;
           font-family: "Open Sans", sans-serif;
           font-size: 1rem;
           color: #fff;
           background-color: #003399;
           border: 2px solid #ddd;
           border-radius: 8px;
-          padding: 0.75rem 1.5rem;
+          cursor: pointer;
           &:hover {
             color: #003399;
             background-color: #fff;
             border-color: #003399;
             transition: 0.2s;
           }
+        }
+      }
+    }
+
+    @media (max-width: 768px) {
+      .filters {
+        gap: 0.5rem;
+        select,
+        button {
+          flex: 1 1 100%;
+          min-width: auto;
+        }
+      }
+      .search-input {
+        font-size: 0.9rem;
+        padding: 0.75rem;
+      }
+    }
+    @media (min-width: 1200px) {
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .search-input {
+        max-width: 500px;
+        margin: 0 auto 1.5rem;
+      }
+      .filters {
+        gap: 1.5rem;
+        select,
+        button {
+          max-width: 200px;
         }
       }
     }
@@ -69,6 +107,9 @@ body {
       .map-placeholder {
         margin: 2rem auto;
         max-width: 1200px;
+        .info-window {
+          cursor: pointer;
+        }
       }
     }
   }
@@ -84,6 +125,7 @@ body {
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 1.5rem;
         .place-card {
+          cursor: pointer;
           background-color: #fff;
           border-radius: 8px;
           overflow: hidden;
