@@ -1,9 +1,11 @@
 package com.travello.controller.impl;
 
 import com.travello.controller.RestUserController;
+import com.travello.dto.request.UserRequestDTO;
 import com.travello.dto.response.UserResponseDTO;
 import com.travello.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,14 +17,15 @@ public class RestUserControllerImpl implements RestUserController {
 
     @Override
     @PostMapping("/sign-up")
-    public UserResponseDTO signUp(@RequestParam String email, @RequestParam String username, @RequestParam String password) {
-        return userService.signUp(email, username, password);
+    @ResponseStatus(HttpStatus.CREATED)
+    public UserResponseDTO signUp(@RequestBody UserRequestDTO userRequestDTO) {
+        return userService.signUp(userRequestDTO);
     }
 
     @Override
-    @GetMapping("/login")
-    public UserResponseDTO login(@RequestParam String email, @RequestParam String password) {
-        return userService.login(email, password);
+    @PostMapping("/login")
+    public UserResponseDTO login(@RequestBody UserRequestDTO userRequestDTO) {
+        return userService.login(userRequestDTO);
     }
 
     @Override
@@ -33,7 +36,19 @@ public class RestUserControllerImpl implements RestUserController {
 
     @Override
     @PutMapping("/change-password/{id}")
-    public boolean changePassword(@PathVariable Long id,@RequestParam String currentPassword, @RequestParam String newPassword) {
+    public boolean changePassword(@PathVariable Long id, @RequestParam String currentPassword, @RequestParam String newPassword) {
         return userService.changePassword(id, currentPassword, newPassword);
+    }
+
+    @Override
+    @GetMapping("/check-email")
+    public boolean checkEmail(@RequestParam String email) {
+        return userService.checkEmail(email);
+    }
+
+    @Override
+    @GetMapping("/check-username")
+    public boolean checkUsername(@RequestParam String username) {
+        return userService.checkUsername(username);
     }
 }

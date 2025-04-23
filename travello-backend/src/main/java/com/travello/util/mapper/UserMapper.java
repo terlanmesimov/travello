@@ -1,5 +1,6 @@
 package com.travello.util.mapper;
 
+import com.travello.dto.request.UserRequestDTO;
 import com.travello.dto.response.UserResponseDTO;
 import com.travello.entity.User;
 import com.travello.util.ImageUtil;
@@ -12,11 +13,11 @@ public class UserMapper {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public User mapToUser(String email, String username, String password) {
+    public User mapToUser(UserRequestDTO userRequestDTO) {
         User user = new User();
-        user.setEmail(email);
-        user.setUsername(username);
-        user.setPassword(passwordEncoder.encode(password));
+        user.setEmail(userRequestDTO.getEmail());
+        user.setUsername(userRequestDTO.getUsername());
+        user.setPassword(passwordEncoder.encode(userRequestDTO.getPassword()));
         return user;
     }
 
@@ -24,7 +25,9 @@ public class UserMapper {
         UserResponseDTO response = new UserResponseDTO();
         response.setEmail(user.getEmail());
         response.setUsername(user.getUsername());
-//        response.setImageBase64(ImageUtil.encodeImageToBase64String(user.getImage()));
+        if (user.getImage() != null) {
+            response.setImageBase64(ImageUtil.encodeImageToBase64String(user.getImage()));
+        }
         return response;
     }
 }

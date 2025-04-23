@@ -94,6 +94,17 @@
       }
     }
 
+    .place-map {
+      margin-top: 2rem;
+    
+      .map-title {
+        font-family: "Poppins", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #003399;
+        margin-bottom: 1rem;
+      }
+    }
     // Şərh Bölməsi
     .place-comments {
       background-color: #fff; 

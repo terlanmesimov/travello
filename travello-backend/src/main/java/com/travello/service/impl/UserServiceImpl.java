@@ -1,17 +1,18 @@
 package com.travello.service.impl;
 
+import com.travello.dto.request.UserRequestDTO;
 import com.travello.dto.response.UserResponseDTO;
 import com.travello.entity.User;
 import com.travello.repository.UserRepository;
-import com.travello.service.EmailValidationService;
 import com.travello.service.UserService;
 import com.travello.util.ImageUtil;
 import com.travello.util.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -19,26 +20,24 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private EmailValidationService emailValidationService;
-    @Autowired
     private UserMapper userMapper;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public UserResponseDTO signUp(String email, String username, String password) {
-        if (emailValidationService.isEmailValid(email)) {
-            String encodedPassword = passwordEncoder.encode(password);
-            User user = userMapper.mapToUser(email, username, password);
-            return userMapper.mapToResponse(userRepository.save(user));
-        }
-        return null;
+    public UserResponseDTO signUp(UserRequestDTO userRequestDTO) {
+        String encodedPassword = passwordEncoder.encode(userRequestDTO.getPassword());
+        User user = userMapper.mapToUser(userRequestDTO);
+        return userMapper.mapToResponse(userRepository.save(user));
     }
 
     @Override
-    public UserResponseDTO login(String email, String password) {
-        List<User> users = userRepository.findUserByEmail(email);
-        return userMapper.mapToResponse(users.getFirst());
+    public UserResponseDTO login(UserRequestDTO userRequestDTO) {
+        User user = userRepository.findUserByEmail(userRequestDTO.getEmail()).orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
+        if (passwordEncoder.matches(user.getPassword(), userRequestDTO.getPassword())) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        }
+        return userMapper.mapToResponse(user);
     }
 
     @Override
@@ -58,5 +57,15 @@ public class UserServiceImpl implements UserService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean checkEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
+    @Override
+    public boolean checkUsername(String username) {
+        return userRepository.existsByUsername(username);
     }
 }

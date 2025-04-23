@@ -4,18 +4,25 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import RenderStars from "../utils/StarUtil";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 
 const CardDetail = () => {
   const { id } = useParams();
-  const [placeData, setPlaceData] = useState([]);
+  const [placeData, setPlaceData] = useState({});
+
+  const fetchPlaceData = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_REST_API_URL}/place/get-by-id/${id}`
+      );
+      setPlaceData(response.data);
+    } catch (error) {
+      console.error("Data fetch error: " + error);
+    }
+  };
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_REST_API_URL}/place/get-by-id/${id}`)
-      .then((response) => {
-        setPlaceData(response.data);
-      })
-      .catch((error) => console.error(error));
+    fetchPlaceData();
   }, [id]);
 
   return (
@@ -41,6 +48,33 @@ const CardDetail = () => {
             </div>
             <button className="place-favorite">Favoritlərə Əlavə Et</button>
           </div>
+
+          {placeData.location && (
+            <div className="place-map">
+              <h2 className="map-title">Məkanın Yeri</h2>
+              <MapContainer
+                center={[
+                  placeData.location.latitude,
+                  placeData.location.longitude,
+                ]}
+                zoom={15}
+                style={{ height: "400px", width: "100%", borderRadius: "8px" }}
+              >
+                <TileLayer
+                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                />
+                <Marker
+                  position={[
+                    placeData.location.latitude,
+                    placeData.location.longitude,
+                  ]}
+                >
+                  <Popup>{placeData.name}</Popup>
+                </Marker>
+              </MapContainer>
+            </div>
+          )}
 
           <div className="place-comments">
             <h2 className="comments-title">Şərhlər</h2>

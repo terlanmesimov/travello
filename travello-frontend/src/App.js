@@ -9,12 +9,10 @@ import Favorites from "./pages/Favorites";
 import CardDetail from "./pages/CardDetail";
 import About from "./pages/About";
 import Account from "./pages/Account";
-import { LoadScript } from "@react-google-maps/api";
 import NotFound from "./pages/NotFound";
 
 const App = () => {
   return (
-    <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -29,7 +27,6 @@ const App = () => {
           <Route path="/register" element={<Register />} />
         </Routes>
       </BrowserRouter>
-    </LoadScript>
   );
 };
 
