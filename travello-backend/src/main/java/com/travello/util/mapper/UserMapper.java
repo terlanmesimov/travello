@@ -23,11 +23,13 @@ public class UserMapper {
 
     public UserResponseDTO mapToResponse(User user) {
         UserResponseDTO response = new UserResponseDTO();
-        response.setEmail(user.getEmail());
         response.setUsername(user.getUsername());
+        response.setEmail(user.getEmail());
         if (user.getImage() != null) {
-            response.setImageBase64(ImageUtil.encodeImageToBase64String(user.getImage()));
+            response.setProfilePictureBase64(ImageUtil.encodeImageToBase64String(user.getImage()));
         }
+        user.getComments().forEach((comment) -> response.getCommentIds().add(comment.getId()));
+        user.getFavorites().forEach((place -> response.getFavoritePlaceIds().add(place.getId())));
         return response;
     }
 }

@@ -4,40 +4,81 @@ import com.travello.dto.request.UserRequestDTO;
 import com.travello.dto.response.UserResponseDTO;
 import com.travello.entity.User;
 import com.travello.repository.UserRepository;
+import com.travello.service.JwtService;
 import com.travello.service.UserService;
+import com.travello.util.EmailUtil;
 import com.travello.util.ImageUtil;
 import com.travello.util.mapper.UserMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
+@RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private UserMapper userMapper;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final UserMapper userMapper;
+    private final EmailUtil emailUtil;
+    private final JwtService jwtService;
 
     @Override
-    public UserResponseDTO signUp(UserRequestDTO userRequestDTO) {
-        String encodedPassword = passwordEncoder.encode(userRequestDTO.getPassword());
-        User user = userMapper.mapToUser(userRequestDTO);
-        return userMapper.mapToResponse(userRepository.save(user));
+    public ResponseEntity<?> register(UserRequestDTO userRequestDTO) {
+        String hunterEmailVerifierStatus = emailUtil.verifyEmailByHunter(userRequestDTO.getEmail());
+        boolean isExistsUser = userRepository.existsByUsername(userRequestDTO.getUsername());
+        if (Objects.equals(hunterEmailVerifierStatus, "valid") && !isExistsUser) {
+            User user = userMapper.mapToUser(userRequestDTO);
+            userRepository.save(user);
+            if (userRepository.findById(user.getId()).isPresent()) {
+                return ResponseEntity.status(HttpStatus.CREATED).body("User Registered Successfully");
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("User Registration Failed");
+            }
+        } else {
+            Map<String, Object> response = new HashMap<>();
+            response.put("hunterEmailVerifierStatus", hunterEmailVerifierStatus);
+            response.put("isExistsUser", isExistsUser);
+            return ResponseEntity.ok(response);
+        }
     }
 
     @Override
-    public UserResponseDTO login(UserRequestDTO userRequestDTO) {
-        User user = userRepository.findUserByEmail(userRequestDTO.getEmail()).orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
-        if (passwordEncoder.matches(user.getPassword(), userRequestDTO.getPassword())) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+    public ResponseEntity<?> login(UserRequestDTO userRequestDTO) {
+        Optional<User> user = userRepository.findUserByUsername(userRequestDTO.getUsername());
+        Map<String, Object> response = new HashMap<>();
+        if (user.isEmpty()) {
+            response.put("status", 404);
+        } else {
+            if (!passwordEncoder.matches(userRequestDTO.getPassword(), user.get().getPassword())) {
+                response.put("status", 401);
+            } else {
+                response.put("status", 200);
+                response.put("token", jwtService.generateToken(user.get().getUsername()));
+            }
         }
-        return userMapper.mapToResponse(user);
+        return ResponseEntity.ok(response);
+    }
+
+    @Override
+    public ResponseEntity<?> getUser(String token) {
+        boolean isValid = jwtService.isTokenValid(token);
+        if (isValid) {
+            String username = jwtService.extractUsername(token);
+            User user = userRepository.findUserByUsername(username).orElseThrow(() ->
+                    new ResponseStatusException(HttpStatus.NOT_FOUND, "User Not Found"));
+            UserResponseDTO response = userMapper.mapToResponse(user);
+            return ResponseEntity.ok(response);
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token Is Expired");
     }
 
     @Override
@@ -57,15 +98,5 @@ public class UserServiceImpl implements UserService {
             return true;
         }
         return false;
-    }
-
-    @Override
-    public boolean checkEmail(String email) {
-        return userRepository.existsByEmail(email);
-    }
-
-    @Override
-    public boolean checkUsername(String username) {
-        return userRepository.existsByUsername(username);
     }
 }

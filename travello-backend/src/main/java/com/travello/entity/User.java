@@ -26,4 +26,11 @@ public class User {
     private byte[] image;
     @OneToMany(mappedBy = "user")
     private List<Comment> comments;
+    @ManyToMany
+    @JoinTable(
+            name = "place_user",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "place_id")
+    )
+    private List<Place> favorites;
 }

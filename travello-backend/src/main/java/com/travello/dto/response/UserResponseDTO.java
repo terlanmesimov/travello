@@ -2,9 +2,13 @@ package com.travello.dto.response;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class UserResponseDTO {
-    private String email;
     private String username;
-    private String imageBase64;
+    private String email;
+    private String profilePictureBase64;
+    private List<Long> favoritePlaceIds;
+    private List<Long> commentIds;
 }

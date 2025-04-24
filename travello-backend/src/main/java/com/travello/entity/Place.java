@@ -33,6 +33,8 @@ public class Place {
     private byte[] image;
     @ManyToMany(mappedBy = "places")
     private List<Blog> blogs;
+    @ManyToMany(mappedBy = "favorites")
+    private List<User> users;
     @Embedded
     private Location location;
 

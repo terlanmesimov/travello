@@ -1,5 +1,4 @@
 import axios from "axios";
-import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
@@ -12,67 +11,37 @@ const Register = () => {
   } = useForm();
   const navigate = useNavigate();
 
-  const verifyUsername = async (username) => {
-    try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_REST_API_URL}/user/check-username?username=${username}`
-      );
-      return !response.data;
-    } catch (error) {
-      console.error("Error verifying username:", error);
-      return false;
-    }
-  };
-
-  const verifyEmail = async (email) => {
-    try {
-      const responseHunter = await axios.get(
-        `https://api.hunter.io/v2/email-verifier?email=${email}&api_key=${process.env.REACT_APP_HUNTER_API_KEY}`
-      );
-      const responseDatabase = await axios.get(
-        `${process.env.REACT_APP_REST_API_URL}/user/check-email?email=${email}`
-      );
-      const responseStatus = responseHunter.data.data.status;
-      return responseStatus === "valid" && responseDatabase.data === false;
-    } catch (error) {
-      console.error("Error verifying email:", error);
-      return false;
-    }
-  };
-
   const saveUser = async (formData) => {
-    const isValidEmail = await verifyEmail(formData.email);
-    const isValidUsername = await verifyUsername(formData.username);
-    if (isValidEmail && isValidUsername) {
-      try {
-        const response = await axios.post(
-          `${process.env.REACT_APP_REST_API_URL}/user/sign-up`,
-          {
-            email: formData.email,
-            username: formData.username,
-            password: formData.password,
-          }
-        );
-        if (response.status === 201) {
-          navigate("/login");
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_REST_API_URL}/user/register`,
+        {
+          email: formData.email,
+          username: formData.username,
+          password: formData.password,
         }
-      } catch (error) {
-        console.error("Data fetch error: " + error);
+      );
+
+      if (response.status === 201) {
+        navigate("/login");
+        alert("Qeydiyyat prosesi uğurla başa çatdı");
+      } else {
+        if (response.data.hunterEmailVerifierStatus !== "valid") {
+          setError("email", {
+            type: "manual",
+            message:
+              "E-poçt doğrulama uğursuz oldu. Daxil etdiyiniz e-poçt mövcud deyil",
+          });
+        }
+        if (response.data.isExistsUser === true) {
+          setError("username", {
+            type: "manual",
+            message: "Daxil etdiyiniz istifadəçi adı artıq mövcuddur",
+          });
+        }
       }
-    } else {
-      if (!isValidEmail) {
-        setError("email", {
-          type: "manual",
-          message:
-            "E-poçt doğrulama uğursuz oldu. Daxil etdiyiniz e-poçt mövcud deyil ya da bu e-poct artıq istifadə olunub",
-        });
-      }
-      if (!isValidUsername) {
-        setError("username", {
-          type: "manual",
-          message: "Daxil etdiyiniz istifadəçi adı artıq mövcuddur",
-        });
-      }
+    } catch (error) {
+      console.error("Data fetch error: " + error);
     }
   };
 

@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { GlobalContext } from "../utils/GlobalProvider";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -12,26 +13,36 @@ const Login = () => {
   } = useForm();
   const navigate = useNavigate();
 
+  const { setHasToken } = useContext(GlobalContext);
+
   const login = async (formData) => {
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_REST_API_URL}/user/login`,
         {
-          email: formData.email,
+          username: formData.username,
           password: formData.password,
         }
       );
-
-      if (response.status === 200) {
+      if (response.data.status === 200) {
         localStorage.setItem("token", response.data.token);
-        navigate("/dashboard"); 
+        setHasToken(true);
+        navigate("/");
+      }
+      if (response.data.status === 404) {
+        setError("username", {
+          type: "manual",
+          message: "İstifadəçi mövcud deyil",
+        });
+      }
+      if (response.data.status === 401) {
+        setError("password", {
+          type: "manual",
+          message: "Şifrə yanlışdır",
+        });
       }
     } catch (error) {
       console.error("Login error:", error);
-      setError("email", {
-        type: "manual",
-        message: "E-poçt və ya şifrə yanlışdır.",
-      });
     }
   };
 
@@ -45,22 +56,23 @@ const Login = () => {
         <h1 className="auth-title">Daxil ol</h1>
         <form className="auth-form" onSubmit={handleSubmit(onSubmit)}>
           <div className="form-group">
-            <label htmlFor="email">E-poçt</label>
+            <label htmlFor="username">Username</label>
             <input
-              type="email"
-              id="email"
-              placeholder="nümunə@mail.com"
+              type="text"
+              id="username"
+              placeholder="İstifadəçi adınızı daxil edin"
               className="form-input"
-              {...register("email", {
-                required: "E-poçt tələb olunur",
+              {...register("username", {
+                required: "İstifadəçi adı tələb olunur",
                 pattern: {
-                  value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                  message: "Düzgün e-poçt formatı daxil edin",
+                  value: /^[a-zA-Z0-9]{4,16}$/,
+                  message:
+                    "İstifadəçi adı yalnız hərf və rəqəmlərdən ibarət olmalıdır və 4-16 simvol arasında olmalıdır.",
                 },
               })}
             />
-            {errors.email && (
-              <p className="form-error">{errors.email.message}</p>
+            {errors.username && (
+              <p className="form-error">{errors.username.message}</p>
             )}
           </div>
           <div className="form-group">

@@ -10,9 +10,11 @@ import CardDetail from "./pages/CardDetail";
 import About from "./pages/About";
 import Account from "./pages/Account";
 import NotFound from "./pages/NotFound";
+import GlobalProvider from "./utils/GlobalProvider";
 
 const App = () => {
   return (
+    <GlobalProvider>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -27,6 +29,7 @@ const App = () => {
           <Route path="/register" element={<Register />} />
         </Routes>
       </BrowserRouter>
+    </GlobalProvider>
   );
 };
 

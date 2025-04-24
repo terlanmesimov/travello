@@ -2,30 +2,35 @@ package com.travello.controller.impl;
 
 import com.travello.controller.RestUserController;
 import com.travello.dto.request.UserRequestDTO;
-import com.travello.dto.response.UserResponseDTO;
 import com.travello.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/rest/api/user")
 @CrossOrigin(origins = "http://localhost:3000")
 public class RestUserControllerImpl implements RestUserController {
-    @Autowired
-    private UserService userService;
+
+    private final UserService userService;
 
     @Override
-    @PostMapping("/sign-up")
-    @ResponseStatus(HttpStatus.CREATED)
-    public UserResponseDTO signUp(@RequestBody UserRequestDTO userRequestDTO) {
-        return userService.signUp(userRequestDTO);
+    @PostMapping("/register")
+    public ResponseEntity<?> register(@RequestBody UserRequestDTO userRequestDTO) {
+        return userService.register(userRequestDTO);
     }
 
     @Override
     @PostMapping("/login")
-    public UserResponseDTO login(@RequestBody UserRequestDTO userRequestDTO) {
+    public ResponseEntity<?> login(@RequestBody UserRequestDTO userRequestDTO) {
         return userService.login(userRequestDTO);
+    }
+
+    @Override
+    @PostMapping("/check")
+    public ResponseEntity<?> getUser(@RequestBody String token) {
+        return  userService.getUser(token);
     }
 
     @Override
@@ -38,17 +43,5 @@ public class RestUserControllerImpl implements RestUserController {
     @PutMapping("/change-password/{id}")
     public boolean changePassword(@PathVariable Long id, @RequestParam String currentPassword, @RequestParam String newPassword) {
         return userService.changePassword(id, currentPassword, newPassword);
-    }
-
-    @Override
-    @GetMapping("/check-email")
-    public boolean checkEmail(@RequestParam String email) {
-        return userService.checkEmail(email);
-    }
-
-    @Override
-    @GetMapping("/check-username")
-    public boolean checkUsername(@RequestParam String username) {
-        return userService.checkUsername(username);
     }
 }

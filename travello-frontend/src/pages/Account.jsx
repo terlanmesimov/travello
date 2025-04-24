@@ -1,8 +1,10 @@
-// Components
+import { useContext } from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import { GlobalContext } from "../utils/GlobalProvider";
 
 const Account = () => {
+  const { userData, setUserData } = useContext(GlobalContext);
   return (
     <>
       <Header />
@@ -12,7 +14,7 @@ const Account = () => {
           <div className="account-info">
             <div className="profile-picture">
               <img
-                src="https://via.placeholder.com/150"
+                src={`data:image/jpeg;base64,${userData.profilePictureBase64}`}
                 alt="Profil Şəkli"
                 className="profile-image"
               />
@@ -22,11 +24,11 @@ const Account = () => {
               </div>
             </div>
             <div className="user-details">
-              <h2 className="user-name">İstifadəçi Adı</h2>
-              <p className="user-email">nümunə@mail.com</p>
+              <h2 className="user-name">{userData.username}</h2>
+              <p className="user-email">{userData.email}</p>
             </div>
           </div>
-
+          
           <div className="user-reviews">
             <h2 className="reviews-heading">Rəylərim</h2>
             <div className="reviews-list">
