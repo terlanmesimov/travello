@@ -1,6 +1,7 @@
 package com.travello.controller.impl;
 
 import com.travello.controller.RestUserController;
+import com.travello.dto.request.OtpDTO;
 import com.travello.dto.request.UserRequestDTO;
 import com.travello.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -41,8 +42,27 @@ public class RestUserControllerImpl implements RestUserController {
     }
 
     @Override
-    @PutMapping("/change-password/{id}")
-    public boolean changePassword(@PathVariable Long id, @RequestParam String currentPassword, @RequestParam String newPassword) {
-        return userService.changePassword(id, currentPassword, newPassword);
+    @DeleteMapping("/delete-pp")
+    public ResponseEntity<?> deleteImage(@RequestHeader String token) {
+        return userService.deleteImage(token);
     }
+
+    @Override
+    @PostMapping("/send-otp")
+    public ResponseEntity<?> sendOtp(@RequestParam String emailTo) {
+        return userService.sendOtp(emailTo);
+    }
+
+    @Override
+    @PostMapping("/verify-otp")
+    public ResponseEntity<?> verifyOtp(@RequestBody OtpDTO otpDTO) {
+        return userService.verifyOtp(otpDTO);
+    }
+
+    @Override
+    @PutMapping("/update-pass")
+    public ResponseEntity<?> updatePassword(@RequestBody OtpDTO otpDTO) {
+        return userService.updatePassword(otpDTO);
+    }
+
 }

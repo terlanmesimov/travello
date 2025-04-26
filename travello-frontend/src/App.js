@@ -11,6 +11,7 @@ import About from "./pages/About";
 import Account from "./pages/Account";
 import NotFound from "./pages/NotFound";
 import GlobalProvider from "./utils/GlobalProvider";
+import ResetPassword from "./pages/ResetPassword";
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
           <Route path="/card-detail/:id" element={<CardDetail />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
         </Routes>
       </BrowserRouter>
     </GlobalProvider>

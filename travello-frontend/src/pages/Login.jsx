@@ -13,7 +13,7 @@ const Login = () => {
   } = useForm();
   const navigate = useNavigate();
 
-  const { setHasToken } = useContext(GlobalContext);
+  const { checkAuth } = useContext(GlobalContext);
 
   const login = async (formData) => {
     try {
@@ -26,7 +26,7 @@ const Login = () => {
       );
       if (response.data.status === 200) {
         localStorage.setItem("token", response.data.token);
-        setHasToken(true);
+        checkAuth();
         navigate("/");
       }
       if (response.data.status === 404) {
@@ -101,6 +101,12 @@ const Login = () => {
             Hesabınız yoxdur?{" "}
             <a href="/register" className="auth-link">
               Qeydiyyatdan keçin
+            </a>
+          </p>
+          <p className="auth-redirect-text">
+            Şifrəni unutmusunuz?{" "}
+            <a href="/reset-password" className="auth-link">
+              Bura klikləyin
             </a>
           </p>
         </form>

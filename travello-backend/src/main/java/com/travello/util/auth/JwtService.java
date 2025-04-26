@@ -1,4 +1,4 @@
-package com.travello.service;
+package com.travello.util.auth;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

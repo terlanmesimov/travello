@@ -33,10 +33,16 @@ const Register = () => {
               "E-poçt doğrulama uğursuz oldu. Daxil etdiyiniz e-poçt mövcud deyil",
           });
         }
-        if (response.data.isExistsUser === true) {
+        if (response.data.isExistsUsername === true) {
           setError("username", {
             type: "manual",
             message: "Daxil etdiyiniz istifadəçi adı artıq mövcuddur",
+          });
+        }
+        if (response.data.isExistsEmail === true) {
+          setError("email", {
+            type: "manual",
+            message: "Daxil etdiyiniz e-poçt artıq istifadə olunub",
           });
         }
       }

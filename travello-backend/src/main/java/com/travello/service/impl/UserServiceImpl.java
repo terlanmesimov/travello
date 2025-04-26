@@ -1,13 +1,15 @@
 package com.travello.service.impl;
 
+import com.travello.dto.request.OtpDTO;
 import com.travello.dto.request.UserRequestDTO;
 import com.travello.dto.response.UserResponseDTO;
 import com.travello.entity.User;
 import com.travello.repository.UserRepository;
-import com.travello.service.JwtService;
 import com.travello.service.UserService;
-import com.travello.util.EmailUtil;
 import com.travello.util.ImageUtil;
+import com.travello.util.auth.EmailService;
+import com.travello.util.auth.JwtService;
+import com.travello.util.auth.OtpService;
 import com.travello.util.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -30,14 +32,16 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
-    private final EmailUtil emailUtil;
+    private final EmailService emailService;
     private final JwtService jwtService;
+    private final OtpService otpService;
 
     @Override
     public ResponseEntity<?> register(UserRequestDTO userRequestDTO) {
-        String hunterEmailVerifierStatus = emailUtil.verifyEmailByHunter(userRequestDTO.getEmail());
-        boolean isExistsUser = userRepository.existsByUsername(userRequestDTO.getUsername());
-        if (Objects.equals(hunterEmailVerifierStatus, "valid") && !isExistsUser) {
+        String hunterEmailVerifierStatus = emailService.verifyEmailByHunter(userRequestDTO.getEmail());
+        boolean isExistsUsername = userRepository.existsByUsername(userRequestDTO.getUsername());
+        boolean isExistEmail = userRepository.existsByEmail(userRequestDTO.getEmail());
+        if (Objects.equals(hunterEmailVerifierStatus, "valid") && !isExistsUsername && !isExistEmail) {
             User user = userMapper.mapToUser(userRequestDTO);
             userRepository.save(user);
             if (userRepository.findById(user.getId()).isPresent()) {
@@ -48,7 +52,8 @@ public class UserServiceImpl implements UserService {
         } else {
             Map<String, Object> response = new HashMap<>();
             response.put("hunterEmailVerifierStatus", hunterEmailVerifierStatus);
-            response.put("isExistsUser", isExistsUser);
+            response.put("isExistsUsername", isExistsUsername);
+            response.put("isExistsEmail", isExistEmail);
             return ResponseEntity.ok(response);
         }
     }
@@ -106,13 +111,49 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean changePassword(Long id, String currentPassword, String newPassword) {
-        if (Objects.equals(passwordEncoder.encode(currentPassword),
-                userRepository.findById(id).orElseThrow().getPassword())) {
-            User user = userRepository.findById(id).orElseThrow();
-            user.setPassword(newPassword);
-            return true;
+    public ResponseEntity<?> deleteImage(String token) {
+        boolean isValid = jwtService.isTokenValid(token);
+        if (isValid) {
+            String username = jwtService.extractUsername(token);
+            User user = userRepository.findUserByUsername(username).orElseThrow(() ->
+                    new ResponseStatusException(HttpStatus.NOT_FOUND, "User Not Found"));
+            user.setImageType(null);
+            user.setImage(null);
+            User updatedUser = userRepository.save(user);
+            if (updatedUser.getImage() == null && updatedUser.getImageType() == null) {
+                return ResponseEntity.ok("Image Deleted Successfully");
+            }
         }
-        return false;
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Image Delete Failed");
     }
+
+    @Override
+    public ResponseEntity<?> sendOtp(String emailTo) {
+        boolean isExistEmail = userRepository.existsByEmail(emailTo);
+        if (isExistEmail) {
+            boolean hasSent = otpService.sendOtp(emailTo);
+            if (hasSent) return ResponseEntity.ok("Otp Sent");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Otp Sending Failed");
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email Doesn't Exist");
+    }
+
+    @Override
+    public ResponseEntity<?> verifyOtp(OtpDTO otpDTO) {
+        boolean isVerified = otpService.verifyOtp(otpDTO.getEmail(), otpDTO.getInputOtp());
+        if (isVerified) return ResponseEntity.ok("Otp Verified");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Otp Is False");
+    }
+
+    @Override
+    public ResponseEntity<?> updatePassword(OtpDTO otpDTO) {
+        User user = userRepository.findUserByEmail(otpDTO.getEmail());
+        user.setPassword(passwordEncoder.encode(otpDTO.getNewPassword()));
+        User updatedUser = userRepository.save(user);
+        if (passwordEncoder.matches(otpDTO.getNewPassword(), updatedUser.getPassword())) {
+            return ResponseEntity.ok("Password Updated Successfully");
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Password Update Failed");
+    }
+
 }

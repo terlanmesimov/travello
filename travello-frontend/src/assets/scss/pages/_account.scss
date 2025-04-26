@@ -1,8 +1,10 @@
 .account {
   padding: 4rem 0;
   background-color: #f8f9fa;
+
   .container {
     padding: 0 1rem;
+
     .account-heading {
       font-family: "Poppins", sans-serif;
       font-size: 2rem;
@@ -15,6 +17,7 @@
     // İstifadəçi Məlumatları
     .account-info {
       display: flex;
+      flex-wrap: wrap; // Flexbox wrap for responsiveness
       align-items: center;
       gap: 2rem;
       background-color: #fff;
@@ -22,18 +25,25 @@
       border-radius: 8px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
       margin-bottom: 2rem;
+
       .profile-picture {
         text-align: center;
+        flex: 1 1 100%; // Full width on smaller screens
+
         .profile-image {
-          width: 150px;
-          height: 150px;
+          width: 220px; 
+          height: 220px;
           border-radius: 50%;
           object-fit: cover;
           margin-bottom: 1rem;
         }
+
         .profile-actions {
           display: flex;
+          align-items: center;
+          justify-content: center;
           gap: 0.5rem;
+
           .profile-action-button {
             padding: 0.5rem 1rem;
             background-color: #003399;
@@ -44,6 +54,7 @@
             font-size: 0.9rem;
             cursor: pointer;
             transition: background-color 0.3s ease;
+
             &:hover {
               background-color: #002266;
             }
@@ -52,6 +63,8 @@
       }
 
       .user-details {
+        flex: 1 1 100%; // Full width on smaller screens
+
         .user-name {
           font-family: "Poppins", sans-serif;
           font-size: 1.5rem;
@@ -59,28 +72,33 @@
           color: #003399;
           margin-bottom: 0.5rem;
         }
+
         .user-email {
           font-family: "Open Sans", sans-serif;
           font-size: 1rem;
           color: #666;
         }
+
         .account-actions {
           margin-top: 20px;
           display: flex;
+          flex-wrap: wrap; // Wrap buttons for smaller screens
           gap: 10px;
-        }
-        .account-action-button {
-          padding: 10px 20px;
-          background-color: #003399;
-          color: white;
-          border: none;
-          border-radius: 5px;
-          cursor: pointer;
-          font-size: 14px;
-          transition: background-color 0.3s ease;
-        }
-        .account-action-button:hover {
-          background-color: #002266;
+
+          .account-action-button {
+            padding: 10px 20px;
+            background-color: #003399;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+              background-color: #002266;
+            }
+          }
         }
       }
     }
@@ -91,6 +109,7 @@
       padding: 2rem;
       border-radius: 8px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
       .reviews-heading {
         font-family: "Poppins", sans-serif;
         font-size: 1.5rem;
@@ -98,12 +117,14 @@
         color: #003399;
         margin-bottom: 1.5rem;
       }
+
       .reviews-list {
         .review {
           background-color: #f8f9fa;
           padding: 1.5rem;
           border-radius: 8px;
           margin-bottom: 1rem;
+
           .review-place {
             font-family: "Poppins", sans-serif;
             font-size: 1.25rem;
@@ -111,17 +132,20 @@
             color: #003399;
             margin-bottom: 0.5rem;
           }
+
           .review-rating {
             font-size: 1rem;
             color: #ffc107;
             margin-bottom: 0.5rem;
           }
+
           .review-text {
             font-family: "Open Sans", sans-serif;
             font-size: 0.9rem;
             color: #333;
             margin-bottom: 0.5rem;
           }
+
           .review-date {
             font-family: "Open Sans", sans-serif;
             font-size: 0.8rem;
@@ -130,6 +154,49 @@
           }
         }
       }
+    }
+  }
+
+  // Media Queries for Responsiveness
+  @media (max-width: 768px) {
+    .account-info {
+      flex-direction: column; // Stack items vertically
+    }
+
+    .profile-picture .profile-image {
+      width: 120px;
+      height: 120px;
+    }
+
+    .user-details .user-name {
+      font-size: 1.25rem;
+    }
+
+    .user-details .user-email {
+      font-size: 0.9rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .account-heading {
+      font-size: 1.5rem;
+    }
+
+    .account-info {
+      padding: 1rem;
+    }
+
+    .user-details .user-name {
+      font-size: 1rem;
+    }
+
+    .user-details .user-email {
+      font-size: 0.8rem;
+    }
+
+    .account-actions .account-action-button {
+      font-size: 12px;
+      padding: 8px 16px;
     }
   }
 }

@@ -1,4 +1,4 @@
-package com.travello.util;
+package com.travello.util.auth;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
@@ -8,7 +8,7 @@ import org.springframework.web.client.RestTemplate;
 
 @RequiredArgsConstructor
 @Component
-public class EmailUtil {
+public class EmailService {
 
     private final RestTemplate restTemplate;
     @Value("${hunter.api.key}")

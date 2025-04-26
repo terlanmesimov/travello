@@ -1,10 +1,8 @@
 package com.travello.controller;
 
+import com.travello.dto.request.OtpDTO;
 import com.travello.dto.request.UserRequestDTO;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface RestUserController {
@@ -12,5 +10,8 @@ public interface RestUserController {
     ResponseEntity<?> login(UserRequestDTO userRequestDTO);
     ResponseEntity<?> getUser (String token);
     ResponseEntity<?> changeImage(String token, MultipartFile imageBase64);
-    boolean changePassword(Long id, String currentPassword, String newPassword);
+    ResponseEntity<?> deleteImage(String token);
+    ResponseEntity<?> sendOtp(String emailTo);
+    ResponseEntity<?> verifyOtp(OtpDTO otpDTO);
+    ResponseEntity<?> updatePassword(OtpDTO otpDTO);
 }
