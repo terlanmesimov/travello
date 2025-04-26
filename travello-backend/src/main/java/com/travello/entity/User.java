@@ -24,6 +24,7 @@ public class User {
     @Lob
     @Column(columnDefinition = "MEDIUMBLOB")
     private byte[] image;
+    private String imageType;
     @OneToMany(mappedBy = "user")
     private List<Comment> comments;
     @ManyToMany

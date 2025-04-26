@@ -5,7 +5,13 @@ export const GlobalContext = createContext();
 
 const GlobalProvider = ({ children }) => {
   const [hasToken, setHasToken] = useState(false);
-  const [userData, setUserData] = useState([]);
+  const [userData, setUserData] = useState({
+    username: "",
+    email: "",
+    profilePhotoBase64: null,
+    favoritePlaceIds: [],
+    commentIds: [],
+  });
 
   const globalStates = {
     hasToken,
@@ -17,22 +23,19 @@ const GlobalProvider = ({ children }) => {
   const checkAuth = async () => {
     const token = localStorage.getItem("token");
     try {
-      if (token !== null) {
+      if (token) {
         setHasToken(true);
         const response = await axios.post(
           `${process.env.REACT_APP_REST_API_URL}/user/check`,
           token
         );
         console.log(response.status);
-        if (response.status === 200) {
-          setUserData(response.data);
-        } else {
-          setHasToken(false);
-        }
+        setUserData(response.data);
       } else {
         setHasToken(false);
       }
     } catch (error) {
+      localStorage.removeItem("token");
       setHasToken(false);
     }
   };

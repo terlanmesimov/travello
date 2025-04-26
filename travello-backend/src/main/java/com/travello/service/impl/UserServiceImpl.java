@@ -14,8 +14,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -82,11 +84,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String changeImage(Long id, String imageBase64) {
-        User user = userRepository.findById(id).orElseThrow();
-        user.setImage(ImageUtil.decodeImageToBytes(imageBase64));
-        String newImage = ImageUtil.encodeImageToBase64String(userRepository.save(user).getImage());
-        return newImage;
+    public ResponseEntity<?> changeImage(String token, MultipartFile imageBase64) {
+        boolean isValid = jwtService.isTokenValid(token);
+        if (isValid) {
+            String username = jwtService.extractUsername(token);
+            User user = userRepository.findUserByUsername(username).orElseThrow(() ->
+                    new ResponseStatusException(HttpStatus.NOT_FOUND, "User Not Found"));
+            try {
+                Map<String, String> data = ImageUtil.convertMultipartDataFileToBase64(imageBase64);
+                user.setImageType(data.get("mimiType"));
+                user.setImage(ImageUtil.decodeImageToBytes(data.get("base64String")));
+            } catch (IOException ex) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("File Reading Failed");
+            }
+            User updatedUser = userRepository.save(user);
+            String encodedImage = ImageUtil.encodeImageToBase64String(user.getImage());
+            String newImage = ImageUtil.joinBase64(user.getImageType(), encodedImage);
+            return ResponseEntity.ok(newImage);
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Image Upload Failed");
     }
 
     @Override

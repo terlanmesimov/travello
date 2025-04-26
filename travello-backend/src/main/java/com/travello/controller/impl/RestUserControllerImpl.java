@@ -6,6 +6,7 @@ import com.travello.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RequiredArgsConstructor
 @RestController
@@ -30,13 +31,13 @@ public class RestUserControllerImpl implements RestUserController {
     @Override
     @PostMapping("/check")
     public ResponseEntity<?> getUser(@RequestBody String token) {
-        return  userService.getUser(token);
+        return userService.getUser(token);
     }
 
     @Override
-    @PutMapping("/change-profile-photo/{id}")
-    public String changeImage(@PathVariable Long id, @RequestBody String imageBase64) {
-        return userService.changeImage(id, imageBase64);
+    @PutMapping("/change-pp")
+    public ResponseEntity<?> changeImage(@RequestHeader String token, @RequestParam("profilePhoto") MultipartFile imageBase64) {
+        return userService.changeImage(token, imageBase64);
     }
 
     @Override
