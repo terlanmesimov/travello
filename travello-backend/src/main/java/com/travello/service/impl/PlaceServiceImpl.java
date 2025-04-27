@@ -3,62 +3,106 @@ package com.travello.service.impl;
 import com.travello.dto.request.PlaceRequestDTO;
 import com.travello.dto.response.PlaceResponseDTO;
 import com.travello.entity.Place;
+import com.travello.entity.User;
 import com.travello.repository.PlaceRepository;
+import com.travello.repository.UserRepository;
 import com.travello.service.PlaceService;
+import com.travello.util.auth.JwtService;
 import com.travello.util.mapper.PlaceMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class PlaceServiceImpl implements PlaceService {
 
-    @Autowired
-    private PlaceRepository placeRepository;
-    @Autowired
-    private PlaceMapper placeMapper;
+    private final PlaceRepository placeRepository;
+    private final PlaceMapper placeMapper;
+    private final JwtService jwtService;
+    private final UserRepository userRepository;
 
     @Override
-    public PlaceResponseDTO savePlace(PlaceRequestDTO placeRequestDTO) {
+    public ResponseEntity<PlaceResponseDTO> savePlace(PlaceRequestDTO placeRequestDTO) {
         Place place = placeMapper.mapToPlace(placeRequestDTO);
-        Place returnedDatabasePlace = placeRepository.save(place);
-        return placeMapper.mapToResponse(returnedDatabasePlace);
+        Place addedPlace = placeRepository.save(place);
+        return ResponseEntity.ok(placeMapper.mapToResponse(addedPlace));
     }
 
     @Override
-    public List<PlaceResponseDTO> getPlaceList() {
+    public ResponseEntity<List<PlaceResponseDTO>> getPlaceList() {
         List<Place> placeList = placeRepository.findAll();
-        return placeMapper.mapToResponseDTOList(placeList);
+        return ResponseEntity.ok(placeMapper.mapToResponseDTOList(placeList));
     }
 
     @Override
-    public PlaceResponseDTO getPlaceById(Long id) {
-        return placeMapper.mapToResponse(placeRepository.findById(id).orElseThrow());
+    public ResponseEntity<PlaceResponseDTO> getPlaceById(Long id) {
+        Place place = placeRepository.findById(id).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Place Not Found"));
+        return ResponseEntity.ok(placeMapper.mapToResponse(place));
     }
 
     @Override
-    public boolean deletePlace(Long id) {
+    public ResponseEntity<Boolean> deletePlace(Long id) {
         placeRepository.deleteById(id);
-        return !placeRepository.existsById(id);
+        return ResponseEntity.ok(!placeRepository.existsById(id));
     }
 
     @Override
-    public PlaceResponseDTO updatePlace(Long id, PlaceRequestDTO placeRequestDTO) {
+    public ResponseEntity<PlaceResponseDTO> updatePlace(Long id, PlaceRequestDTO placeRequestDTO) {
         Place place = placeMapper.mapToPlace(placeRequestDTO);
         place.setId(id);
-        return placeMapper.mapToResponse(placeRepository.save(place));
+        Place updatedPlace = placeRepository.save(place);
+        return ResponseEntity.ok(placeMapper.mapToResponse(updatedPlace));
     }
 
     @Override
-    public List<PlaceResponseDTO> getFilteredPlaceList(Long regionId, Long categoryId, Double rating) {
+    public ResponseEntity<List<PlaceResponseDTO>> getFilteredPlaceList(Long regionId, Long categoryId, Double rating) {
         List<Place> placeList = placeRepository.findByFilters(regionId, categoryId, rating);
-        return placeMapper.mapToResponseDTOList(placeList);
+        return ResponseEntity.ok(placeMapper.mapToResponseDTOList(placeList));
     }
 
     @Override
-    public List<PlaceResponseDTO> searchByName(String placeName) {
+    public ResponseEntity<List<PlaceResponseDTO>> searchByName(String placeName) {
         List<Place> placeList = placeRepository.searchByName(placeName);
-        return placeMapper.mapToResponseDTOList(placeList);
+        return ResponseEntity.ok(placeMapper.mapToResponseDTOList(placeList));
+    }
+
+    @Override
+    public ResponseEntity<Boolean> addFavorites(String token, Long id) {
+        boolean isValid = jwtService.isTokenValid(token);
+        if (isValid) {
+            Place place = placeRepository.findById(id).orElseThrow(() ->
+                    new ResponseStatusException(HttpStatus.NOT_FOUND, "Place Not Found"));
+            String username = jwtService.extractUsername(token);
+            User user = userRepository.findUserByUsername(username).orElseThrow(() ->
+                    new ResponseStatusException(HttpStatus.NOT_FOUND, "User Not Found")
+            );
+            List<Place> favorites = user.getFavorites();
+            favorites.add(place);
+            user.setFavorites(favorites);
+            User updatedUser = userRepository.save(user);
+            if (updatedUser.getFavorites().getLast().equals(place)) {
+                return ResponseEntity.ok(true);
+            }
+        }
+        return ResponseEntity.ok(false);
+    }
+
+    @Override
+    public ResponseEntity<Boolean> deleteFavorites(String token, Long id) {
+        boolean isValid = jwtService.isTokenValid(token);
+        if (isValid) {
+            Place place = placeRepository.findById(id).orElseThrow(() ->
+                    new ResponseStatusException(HttpStatus.NOT_FOUND, "Place Not Found"));
+            String username = jwtService.extractUsername(token);
+            User user = userRepository.findUserByUsername(username).orElseThrow(() ->
+                    new ResponseStatusException(HttpStatus.NOT_FOUND, "User Not Found")
+            );
+        }
     }
 }

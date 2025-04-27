@@ -20,7 +20,11 @@ const GlobalProvider = ({ children }) => {
         setHasToken(true);
         const response = await axios.post(
           `${process.env.REACT_APP_REST_API_URL}/user/check`,
-          token
+          {
+            headers: {
+              token: token,
+            },
+          }
         );
         setUserData(response.data);
       } else {
@@ -35,7 +39,6 @@ const GlobalProvider = ({ children }) => {
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
-
 
   const globalStates = {
     hasToken,

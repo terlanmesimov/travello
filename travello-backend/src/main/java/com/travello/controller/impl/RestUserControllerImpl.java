@@ -31,7 +31,7 @@ public class RestUserControllerImpl implements RestUserController {
 
     @Override
     @PostMapping("/check")
-    public ResponseEntity<?> getUser(@RequestBody String token) {
+    public ResponseEntity<?> getUser(@RequestHeader String token) {
         return userService.getUser(token);
     }
 

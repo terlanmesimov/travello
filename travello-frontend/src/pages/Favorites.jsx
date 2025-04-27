@@ -3,6 +3,7 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 
 const Favorites = () => {
+  
   return (
     <>
       <Header />
