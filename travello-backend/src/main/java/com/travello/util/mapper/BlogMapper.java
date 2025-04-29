@@ -8,6 +8,7 @@ import com.travello.entity.Blog;
 import com.travello.entity.Place;
 import com.travello.repository.PlaceRepository;
 import com.travello.util.ImageUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,14 +16,13 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@RequiredArgsConstructor
 @Component
 public class BlogMapper {
-    @Autowired
-    private PlaceRepository placeRepository;
-    @Autowired
-    private PlaceMapper placeMapper;
-    @Autowired
-    private CommentMapper commentMapper;
+
+    private final PlaceRepository placeRepository;
+    private final PlaceMapper placeMapper;
+    private final CommentMapper commentMapper;
 
     public Blog mapToBlog(BlogRequestDTO request) {
         Blog blog = new Blog();

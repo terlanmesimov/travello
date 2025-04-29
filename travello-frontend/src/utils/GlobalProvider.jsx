@@ -6,8 +6,8 @@ export const GlobalContext = createContext();
 const GlobalProvider = ({ children }) => {
   const [hasToken, setHasToken] = useState(false);
   const [userData, setUserData] = useState({
-    username: "",
-    email: "",
+    username: null,
+    email: null,
     profilePhotoBase64: null,
     favoritePlaceIds: [],
     commentIds: [],
@@ -20,11 +20,8 @@ const GlobalProvider = ({ children }) => {
         setHasToken(true);
         const response = await axios.post(
           `${process.env.REACT_APP_REST_API_URL}/user/check`,
-          {
-            headers: {
-              token: token,
-            },
-          }
+          {},
+          { headers: { token: token } }
         );
         setUserData(response.data);
       } else {

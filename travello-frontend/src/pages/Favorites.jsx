@@ -1,66 +1,91 @@
 // Components
+import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import { useCallback, useEffect, useState } from "react";
+import axios from "axios";
 
 const Favorites = () => {
-  
+  const navigate = useNavigate();
+  const [favorites, setFavorites] = useState([]);
+
+  const fetchFavorites = useCallback(async () => {
+    const token = localStorage.getItem("token");
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_REST_API_URL}/place/fav-list`,
+        { headers: { token: token } }
+      );
+      setFavorites(response.data);
+    } catch (error) {
+      navigate("*");
+    }
+  }, [navigate]);
+
+  const deleteFavorites = async (id) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        await axios.delete(
+          `${process.env.REACT_APP_REST_API_URL}/place/delete-fav/${id}`,
+          {
+            headers: {
+              token: token,
+            },
+          }
+        );
+        fetchFavorites();
+      } catch (error) {
+        navigate("*");
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchFavorites();
+  }, [fetchFavorites]);
+
   return (
     <>
-      <Header />
-      <div className="favorites">
+      <div className="page-wrapper">
+        <Header />
+        <div className="favorites">
           <div className="container">
             <h1 className="favorites-heading">Favoritlər</h1>
             <div className="favorites-grid">
-              <div className="favorite-card">
-                <img
-                  src="https://via.placeholder.com/300x200"
-                  alt="İçərişəhər"
-                  className="favorite-image"
-                />
-                <div className="favorite-info">
-                  <h3 className="favorite-title">İçərişəhər</h3>
-                  <p className="favorite-description">Bakının tarixi mərkəzi</p>
-                  <button className="favorite-remove">
-                    Favoritlərdən Çıxar
-                  </button>
-                </div>
-              </div>
-              <div className="favorite-card">
-                <img
-                  src="https://via.placeholder.com/300x200"
-                  alt="Xınalıq"
-                  className="favorite-image"
-                />
-                <div className="favorite-info">
-                  <h3 className="favorite-title">Xınalıq</h3>
-                  <p className="favorite-description">
-                    Qafqazın ən yüksək kəndi
-                  </p>
-                  <button className="favorite-remove">
-                    Favoritlərdən Çıxar
-                  </button>
-                </div>
-              </div>
-              <div className="favorite-card">
-                <img
-                  src="https://via.placeholder.com/300x200"
-                  alt="Şəki Xan Sarayı"
-                  className="favorite-image"
-                />
-                <div className="favorite-info">
-                  <h3 className="favorite-title">Şəki Xan Sarayı</h3>
-                  <p className="favorite-description">
-                    UNESCO-nun Ümumdünya İrs Siyahısında
-                  </p>
-                  <button className="favorite-remove">
-                    Favoritlərdən Çıxar
-                  </button>
-                </div>
-              </div>
+              {favorites.map((favorite) => {
+                return (
+                  <div key={favorite.id} className="favorite-card">
+                    <img
+                      src={`data:image/png;base64,${favorite.imageBase64}`}
+                      alt={favorite.name}
+                      className="favorite-image"
+                    />
+                    <div className="favorite-info">
+                      <h3
+                        onClick={() => navigate(`/card-detail/${favorite.id}`)}
+                        className="favorite-title"
+                      >
+                        {favorite.name}
+                      </h3>
+                      <p className="favorite-description">
+                        {favorite.description}
+                      </p>
+                      <button
+                        onClick={() => deleteFavorites(favorite.id)}
+                        className="favorite-remove"
+                      >
+                        Favoritlərdən Çıxar
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
+        </div>
+        <Footer />
       </div>
-      <Footer />
     </>
   );
 };

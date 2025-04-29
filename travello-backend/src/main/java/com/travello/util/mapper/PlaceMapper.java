@@ -10,20 +10,20 @@ import com.travello.entity.embedded.Location;
 import com.travello.repository.CategoryRepository;
 import com.travello.repository.RegionRepository;
 import com.travello.util.ImageUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@RequiredArgsConstructor
 @Component
 public class PlaceMapper {
-    @Autowired
-    private RegionRepository regionRepository;
-    @Autowired
-    private CategoryRepository categoryRepository;
-    @Autowired
-    private CommentMapper commentMapper;
+
+    private final RegionRepository regionRepository;
+    private final CategoryRepository categoryRepository;
+    private final CommentMapper commentMapper;
 
     public Place mapToPlace(PlaceRequestDTO request){
         Place place = new Place();

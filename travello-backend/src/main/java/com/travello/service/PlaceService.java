@@ -1,6 +1,8 @@
 package com.travello.service;
 
+import com.travello.dto.request.CommentRequestDTO;
 import com.travello.dto.request.PlaceRequestDTO;
+import com.travello.dto.response.CommentResponseDTO;
 import com.travello.dto.response.PlaceResponseDTO;
 import org.springframework.http.ResponseEntity;
 
@@ -16,4 +18,8 @@ public interface PlaceService {
     ResponseEntity<List<PlaceResponseDTO>> searchByName(String placeName);
     ResponseEntity<Boolean> addFavorites(String token, Long id);
     ResponseEntity<Boolean> deleteFavorites(String token, Long id);
+    ResponseEntity<?> getFavorites(String token);
+    ResponseEntity<?> addComment(String token, CommentRequestDTO commentRequestDTO);
+    ResponseEntity<?> editComment(String token,Long id, CommentRequestDTO commentRequestDTO);
+    ResponseEntity<Boolean> deleteComment(String token, Long id);
 }

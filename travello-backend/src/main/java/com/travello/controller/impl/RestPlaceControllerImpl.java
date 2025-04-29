@@ -1,11 +1,12 @@
 package com.travello.controller.impl;
 
 import com.travello.controller.RestPlaceController;
+import com.travello.dto.request.CommentRequestDTO;
 import com.travello.dto.request.PlaceRequestDTO;
+import com.travello.dto.response.CommentResponseDTO;
 import com.travello.dto.response.PlaceResponseDTO;
 import com.travello.service.PlaceService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,15 +46,17 @@ public class RestPlaceControllerImpl implements RestPlaceController {
 
     @Override
     @PutMapping("/update/{id}")
-    public ResponseEntity<PlaceResponseDTO> updatePlace(@PathVariable Long id, @RequestBody PlaceRequestDTO placeRequestDTO) {
+    public ResponseEntity<PlaceResponseDTO> updatePlace(@PathVariable Long id,
+                                                        @RequestBody PlaceRequestDTO placeRequestDTO) {
         return placeService.updatePlace(id, placeRequestDTO);
     }
 
     @Override
     @GetMapping("/filter")
-    public ResponseEntity<List<PlaceResponseDTO>> getFilteredPlaceList(@RequestParam(name = "region-id", required = false) Long regionId,
-                                                                       @RequestParam(name = "category-id", required = false) Long categoryId,
-                                                                       @RequestParam(name = "rating", required = false) Double rating) {
+    public ResponseEntity<List<PlaceResponseDTO>> getFilteredPlaceList(
+            @RequestParam(name = "region-id", required = false) Long regionId,
+            @RequestParam(name = "category-id", required = false) Long categoryId,
+            @RequestParam(name = "rating", required = false) Double rating) {
         return placeService.getFilteredPlaceList(regionId, categoryId, rating);
     }
 
@@ -74,4 +77,32 @@ public class RestPlaceControllerImpl implements RestPlaceController {
     public ResponseEntity<Boolean> deleteFavorites(@RequestHeader String token, @PathVariable Long id) {
         return placeService.deleteFavorites(token, id);
     }
+
+    @Override
+    @GetMapping("/fav-list")
+    public ResponseEntity<?> getFavorites(@RequestHeader String token) {
+        return placeService.getFavorites(token);
+    }
+
+    @Override
+    @PostMapping("/add-comment")
+    public ResponseEntity<?> addComment(@RequestHeader String token,
+                                        @RequestBody CommentRequestDTO commentRequestDTO) {
+        return placeService.addComment(token, commentRequestDTO);
+    }
+
+    @Override
+    @PutMapping("/edit-comment/{id}")
+    public ResponseEntity<?> editComment(@RequestHeader String token,
+                                         @PathVariable Long id,
+                                         @RequestBody CommentRequestDTO commentRequestDTO) {
+        return placeService.editComment(token, id, commentRequestDTO);
+    }
+
+    @Override
+    @DeleteMapping("del-comment/{id}")
+    public ResponseEntity<Boolean> deleteComment(@RequestHeader String token, @PathVariable Long id) {
+        return placeService.deleteComment(token, id);
+    }
+
 }

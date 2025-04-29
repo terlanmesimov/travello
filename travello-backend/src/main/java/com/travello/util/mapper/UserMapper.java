@@ -4,20 +4,24 @@ import com.travello.dto.request.UserRequestDTO;
 import com.travello.dto.response.UserResponseDTO;
 import com.travello.entity.User;
 import com.travello.util.ImageUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
+@RequiredArgsConstructor
 @Component
 public class UserMapper {
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
-    public User mapToUser(UserRequestDTO userRequestDTO) {
+    private final PasswordEncoder passwordEncoder;
+
+    public User mapToUser(UserRequestDTO request) {
         User user = new User();
-        user.setEmail(userRequestDTO.getEmail());
-        user.setUsername(userRequestDTO.getUsername());
-        user.setPassword(passwordEncoder.encode(userRequestDTO.getPassword()));
+        user.setEmail(request.getEmail());
+        user.setUsername(request.getUsername());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
         return user;
     }
 
@@ -28,8 +32,12 @@ public class UserMapper {
         if (user.getImage() != null) {
             response.setProfilePictureBase64(ImageUtil.encodeImageToBase64String(user.getImage()));
         }
-        user.getComments().forEach((comment) -> response.getCommentIds().add(comment.getId()));
-        user.getFavorites().forEach((place -> response.getFavoritePlaceIds().add(place.getId())));
+        List<Long> comments = new ArrayList<>();
+        user.getComments().forEach((comment) -> comments.add(comment.getId()));
+        response.setCommentIds(comments);
+        List<Long> favorites = new ArrayList<>();
+        user.getFavorites().forEach((place) -> favorites.add(place.getId()));
+        response.setFavoritePlaceIds(favorites);
         return response;
     }
 }
