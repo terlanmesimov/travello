@@ -25,6 +25,7 @@ public class Blog {
     @Lob
     @Column(columnDefinition = "MEDIUMBLOB")
     private byte[] image;
+    private String imageType;
     @ManyToMany
     @JoinTable(
             name = "place_blog",

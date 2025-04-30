@@ -11,6 +11,7 @@ const Account = () => {
   const { userData, setUserData, setHasToken } = useContext(GlobalContext);
   const [formData, setFormData] = useState(null);
   const [previewUrl, setPreviewUrl] = useState("");
+  const [reviews, setReviews] = useState([]);
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
   const MAX_FILE_SIZE = 10 * 1024 * 1024;
@@ -102,6 +103,27 @@ const Account = () => {
     }
   };
 
+  const getReviews = useCallback(async () => {
+    const token = localStorage.getItem("token");
+    try {
+      if (token) {
+        const response = await axios.get(
+          `${process.env.REACT_APP_REST_API_URL}/user/get-comments`,
+          { headers: { token: token } }
+        );
+        setReviews(response.data);
+      } else {
+        setHasToken(false);
+      }
+    } catch (error) {
+      return;
+    }
+  }, []);
+
+  useEffect(() => {
+    getReviews();
+  }, [getReviews]);
+
   useEffect(() => {
     if (formData && previewUrl) {
       changeProfilePhoto();
@@ -173,15 +195,18 @@ const Account = () => {
           <div className="user-reviews">
             <h2 className="reviews-heading">Rəylərim</h2>
             <div className="reviews-list">
-              {userData.commentIds?.map((comment) => (
+              {reviews.map((review) => (
                 <Review
-                  key={comment.id}
-                  id={comment.id}
-                  name={comment.name}
-                  rating={comment?.rating}
-                  text={comment.text}
-                  date={comment.date}
-                  type={comment.rating === null ? "blog" : "place"}
+                  key={review.id}
+                  id={review.id}
+                  placeName={review.placeName}
+                  placeId={review.placeId}
+                  blogId={review.blogId}
+                  blogName={review.blogName}
+                  rating={review?.rating}
+                  text={review.text}
+                  createdAt={review.createdAt}
+                  type={review.placeName !== null ? "place" : "blog"}
                 />
               ))}
             </div>
@@ -193,12 +218,34 @@ const Account = () => {
   );
 };
 
-const Review = ({ id, name, rating, text, date, type }) => {
+const Review = ({
+  id,
+  rating,
+  text,
+  createdAt,
+  placeName,
+  blogName,
+  type,
+  blogId,
+  placeId,
+}) => {
+  const date = createdAt.split("T").join(" ").substring(0, 19);
+  const navigate = useNavigate();
+  const handleClick = () => {
+    if (type === "blog") {
+      navigate(`/blog-detail/${blogId}`);
+    } else {
+      navigate(`/card-detail/${placeId}`);
+    }
+  };
   return (
     <div key={id} className="review">
-      <div className="review-place">{name}</div>
+      <div onClick={handleClick} className="review-place">
+        {placeName}
+        {blogName}
+      </div>
       <div className="review-rating">
-        {/* <RenderStars rating={rating} /> */}
+        {rating !== null ? <RenderStars rating={rating} /> : ""}
       </div>
       <div className="review-text">{text}</div>
       <div className="review-date">{date}</div>

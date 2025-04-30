@@ -14,4 +14,5 @@ public interface UserService {
     ResponseEntity<?> sendOtp(String emailTo);
     ResponseEntity<?> verifyOtp(OtpDTO otpDTO);
     ResponseEntity<?> updatePassword(OtpDTO otpDTO);
+    ResponseEntity<?> getComments(String token);
 }

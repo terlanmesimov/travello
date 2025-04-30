@@ -65,4 +65,11 @@ public class RestUserControllerImpl implements RestUserController {
         return userService.updatePassword(otpDTO);
     }
 
+    @Override
+    @GetMapping("/get-comments")
+    public ResponseEntity<?> getComments(@RequestHeader String token) {
+        return userService.getComments(token);
+    }
+
+
 }

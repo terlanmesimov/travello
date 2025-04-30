@@ -31,7 +31,7 @@
         flex: 1 1 100%; // Full width on smaller screens
 
         .profile-image {
-          width: 220px; 
+          width: 220px;
           height: 220px;
           border-radius: 50%;
           object-fit: cover;
@@ -131,6 +131,10 @@
             font-weight: 600;
             color: #003399;
             margin-bottom: 0.5rem;
+            cursor: pointer;
+            &:hover {
+              text-decoration: underline;
+            }
           }
 
           .review-rating {

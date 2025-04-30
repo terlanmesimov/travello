@@ -9,8 +9,6 @@ const GlobalProvider = ({ children }) => {
     username: null,
     email: null,
     profilePhotoBase64: null,
-    favoritePlaceIds: [],
-    commentIds: [],
   });
 
   const checkAuth = useCallback(async () => {

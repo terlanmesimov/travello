@@ -10,8 +10,10 @@ public class CommentResponseDTO {
     private String text;
     private Double rating;
     private String username;
-    private LocalDateTime createdAt;
-    private Long blogId;
     private Long placeId;
+    private String placeName;
+    private Long blogId;
+    private String blogName;
     private String profilePictureBase64;
+    private LocalDateTime createdAt;
 }

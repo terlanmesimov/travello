@@ -87,11 +87,11 @@ const CardDetail = () => {
   };
 
   const checkFavoriteState = useCallback(() => {
-    const isFavorite = userData.favoritePlaceIds.some(
-      (favorite) => String(favorite) === id
+    const isFavorite = userData.favorites?.some(
+      (favorite) => String(favorite.id) === id
     );
     setAddedFavoites(isFavorite);
-  }, [id, userData.favoritePlaceIds]);
+  }, [id, userData.favorites]);
 
   const addComment = async (data) => {
     const token = localStorage.getItem("token");
@@ -113,7 +113,7 @@ const CardDetail = () => {
           }
         );
         const newComment = response.data;
-        setComments([...comments, newComment]);
+        setComments([newComment, ...comments]);
       } catch (error) {
         console.log(error);
       }
@@ -133,7 +133,15 @@ const CardDetail = () => {
         <div className="container">
           <div className="place-images">
             <img
-              src={`data:image/jpeg;base64,${placeData.imageBase64}`}
+              src={
+                placeData.imageBase64 &&
+                typeof placeData.imageBase64 === "string" &&
+                placeData.imageBase64.trim() !== ""
+                  ? placeData.imageBase64.startsWith("data:")
+                    ? placeData.imageBase64
+                    : `data:image/png;base64,${placeData.imageBase64}`
+                  : placeData.imageBase64
+              }
               alt={placeData.name}
               className="place-main-image"
             />
@@ -283,7 +291,7 @@ const Comment = ({
     if (token) {
       try {
         await axios.delete(
-          `${process.env.REACT_APP_REST_API_URL}/place/del-comment/${id}`,
+          `${process.env.REACT_APP_REST_API_URL}/place/delete-comment/${id}`,
           {
             headers: {
               token: token,
@@ -382,10 +390,11 @@ const EditModal = ({
             },
           }
         );
-        const updated = comments.map((comment) =>
-          comment.id === response.data.id ? response.data : comment
+        const updatedComment = response.data;
+        const updatedComments = comments.filter(
+          (comment) => comment.id !== updatedComment.id
         );
-        setComments(updated);
+        setComments([updatedComment, ...updatedComments]);
         closeEditModal();
       } catch (error) {
         console.log(error);
@@ -415,10 +424,6 @@ const EditModal = ({
               className="edit-comment-input"
               {...register("comment", {
                 required: "Şərh tələb olunur",
-                minLength: {
-                  value: 5,
-                  message: "Şərh ən azı 5 simvol olmalıdır",
-                },
               })}
               rows="4"
             ></textarea>

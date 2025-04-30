@@ -21,7 +21,7 @@ public class RestPlaceControllerImpl implements RestPlaceController {
     private final PlaceService placeService;
 
     @Override
-    @PostMapping("/save-place")
+    @PostMapping("/save")
     public ResponseEntity<PlaceResponseDTO> savePlace(@RequestBody PlaceRequestDTO placeRequestDTO) {
         return placeService.savePlace(placeRequestDTO);
     }
@@ -100,7 +100,7 @@ public class RestPlaceControllerImpl implements RestPlaceController {
     }
 
     @Override
-    @DeleteMapping("del-comment/{id}")
+    @DeleteMapping("delete-comment/{id}")
     public ResponseEntity<Boolean> deleteComment(@RequestHeader String token, @PathVariable Long id) {
         return placeService.deleteComment(token, id);
     }

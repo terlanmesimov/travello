@@ -9,6 +9,6 @@ public class UserResponseDTO {
     private String username;
     private String email;
     private String profilePictureBase64;
-    private List<Long> favoritePlaceIds;
-    private List<Long> commentIds;
+    private List<CommentResponseDTO> comments;
+    private List<PlaceResponseDTO> favorites;
 }

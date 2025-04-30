@@ -2,14 +2,20 @@ package com.travello.service.impl;
 
 import com.travello.dto.request.OtpDTO;
 import com.travello.dto.request.UserRequestDTO;
+import com.travello.dto.response.CommentResponseDTO;
 import com.travello.dto.response.UserResponseDTO;
+import com.travello.entity.BlogComment;
+import com.travello.entity.PlaceComment;
 import com.travello.entity.User;
+import com.travello.repository.BlogCommentRepository;
+import com.travello.repository.PlaceCommentRepository;
 import com.travello.repository.UserRepository;
 import com.travello.service.UserService;
 import com.travello.util.ImageUtil;
 import com.travello.util.auth.EmailService;
 import com.travello.util.auth.JwtService;
 import com.travello.util.auth.OtpService;
+import com.travello.util.mapper.CommentMapper;
 import com.travello.util.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,10 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Service
@@ -35,6 +38,9 @@ public class UserServiceImpl implements UserService {
     private final EmailService emailService;
     private final JwtService jwtService;
     private final OtpService otpService;
+    private final CommentMapper commentMapper;
+    private final PlaceCommentRepository placeCommentRepository;
+    private final BlogCommentRepository blogCommentRepository;
 
     @Override
     public ResponseEntity<?> register(UserRequestDTO userRequestDTO) {
@@ -154,6 +160,27 @@ public class UserServiceImpl implements UserService {
             return ResponseEntity.ok("Password Updated Successfully");
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Password Update Failed");
+    }
+
+    @Override
+    public ResponseEntity<?> getComments(String token) {
+        boolean isValid = jwtService.isTokenValid(token);
+        if (isValid) {
+            String username = jwtService.extractUsername(token);
+            User user = userRepository.findUserByUsername(username).orElseThrow(() ->
+                    new ResponseStatusException(HttpStatus.NOT_FOUND, "User Not Found"));
+            List<PlaceComment> placeComments = placeCommentRepository.findPlaceCommentsByUser_Id(user.getId());
+            List<CommentResponseDTO> placeCommentsResponse = new ArrayList<>();
+            placeComments.forEach(placeComment -> placeCommentsResponse.add(commentMapper.mapToResponse(placeComment)));
+            List<BlogComment> blogComments = blogCommentRepository.findBlogCommentsByUser_Id(user.getId());
+            List<CommentResponseDTO> blogCommentsResponse = new ArrayList<>();
+            blogComments.forEach(blogComment -> blogCommentsResponse.add(commentMapper.mapToResponse(blogComment)));
+            List<CommentResponseDTO> response = new ArrayList<>();
+            response.addAll(placeCommentsResponse);
+            response.addAll(blogCommentsResponse);
+            return ResponseEntity.ok(response);
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Token");
     }
 
 }

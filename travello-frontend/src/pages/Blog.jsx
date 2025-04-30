@@ -1,10 +1,29 @@
 // Components
+import { useCallback, useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import axios from "axios";
 
 const Blog = () => {
+  const [blogs, setBlogs] = useState([]);
+
+  const getBlogs = useCallback(async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_REST_API_URL}/blog/list`
+      );
+      console.log(response.data);
+      setBlogs(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+  useEffect(() => {
+    getBlogs();
+  }, [getBlogs]);
   return (
-    <>
+    <div className="page-wrapper">
       <Header />
       <div className="blog">
         <div className="container">
@@ -13,80 +32,40 @@ const Blog = () => {
             Səyahət məqalələri, tövsiyələr, tədbirlər və xəbərlər.
           </p>
           <div className="blog-posts">
-            <BlogPost />
-            <div className="blog-post">
-              <img
-                src="https://via.placeholder.com/400x250"
-                alt="Bakıda Səyahət"
-                className="blog-image"
+            {blogs.map((blog) => (
+              <BlogPost
+                id={blog.id}
+                image={blog.imageBase64}
+                name={blog.name}
+                description={blog.description}
               />
-              <div className="blog-content">
-                <h3 className="blog-title">Bakıda Səyahət Üçün Tövsiyələr</h3>
-                <p className="blog-excerpt">
-                  Bakının ən gözəl yerlərini kəşf edin və unudulmaz təcrübələr
-                  yaşayın.
-                </p>
-                <a href="#" className="blog-link">
-                  Ətraflı Oxu
-                </a>
-              </div>
-            </div>
-            <div className="blog-post">
-              <img
-                src="https://via.placeholder.com/400x250"
-                alt="Qəbələdə Təbiət"
-                className="blog-image"
-              />
-              <div className="blog-content">
-                <h3 className="blog-title">Qəbələdə Təbiət Möcüzələri</h3>
-                <p className="blog-excerpt">
-                  Qəbələnin təbiət gözəlliklərini kəşf edin və rahatlıqla
-                  istirahət edin.
-                </p>
-                <a href="#" className="blog-link">
-                  Ətraflı Oxu
-                </a>
-              </div>
-            </div>
-            <div className="blog-post">
-              <img
-                src="https://via.placeholder.com/400x250"
-                alt="Şəki Xan Sarayı"
-                className="blog-image"
-              />
-              <div className="blog-content">
-                <h3 className="blog-title">Şəki Xan Sarayı: Tarixi Abidə</h3>
-                <p className="blog-excerpt">
-                  Şəki Xan Sarayının tarixi və memarlıq gözəlliyi haqqında
-                  ətraflı məlumat.
-                </p>
-                <a href="/blog-detail" className="blog-link">
-                  Ətraflı Oxu
-                </a>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
       <Footer />
-    </>
+    </div>
   );
 };
 
-const BlogPost = () => {
+const BlogPost = ({id, image, name, description}) => {
   return (
-    <div className="blog-post">
+    <div key={id} className="blog-post">
       <img
-        src="https://via.placeholder.com/400x250"
-        alt="Bakıda Səyahət"
+        src={
+          image && typeof image === "string" && image.trim() !== ""
+            ? image.startsWith("data:")
+              ? image
+              : `data:image/png;base64,${image}`
+            : image
+        }
+        alt={name}
         className="blog-image"
       />
       <div className="blog-content">
-        <h3 className="blog-title">Bakıda Səyahət Üçün Tövsiyələr</h3>
-        <p className="blog-excerpt">
-          Bakının ən gözəl yerlərini kəşf edin və unudulmaz təcrübələr yaşayın.
-        </p>
-        <a href="#" className="blog-link">
+        <h3 className="blog-title">{name}</h3>
+        <p className="blog-excerpt">{description}</p>
+        <a href={`/blog-detail/${id}`} className="blog-link">
           Ətraflı Oxu
         </a>
       </div>

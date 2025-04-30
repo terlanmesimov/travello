@@ -166,7 +166,7 @@ public class PlaceServiceImpl implements PlaceService {
             placeComment.setId(id);
             PlaceComment updatedComment = placeCommentRepository.save(placeComment);
             CommentResponseDTO response = commentMapper.mapToResponse(updatedComment);
-            return ResponseEntity.ok(updatedComment);
+            return ResponseEntity.ok(response);
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Token");
     }

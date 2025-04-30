@@ -9,7 +9,6 @@ import com.travello.entity.Place;
 import com.travello.repository.PlaceRepository;
 import com.travello.util.ImageUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -51,6 +50,14 @@ public class BlogMapper {
         List<CommentResponseDTO> comments = new ArrayList<>();
         blog.getComments().forEach(blogComment -> comments.add(commentMapper.mapToResponse(blogComment)));
         response.setComments(comments);
+        return response;
+    }
+
+    public List<BlogResponseDTO> mapToResponseDTOList (List<Blog> blogList ) {
+        List<BlogResponseDTO> response = new ArrayList<>();
+        for (Blog blog : blogList){
+            response.add(mapToResponse(blog));
+        }
         return response;
     }
 }

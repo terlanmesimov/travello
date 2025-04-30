@@ -1,6 +1,7 @@
 package com.travello.util.mapper;
 
 import com.travello.dto.request.UserRequestDTO;
+import com.travello.dto.response.PlaceResponseDTO;
 import com.travello.dto.response.UserResponseDTO;
 import com.travello.entity.User;
 import com.travello.util.ImageUtil;
@@ -16,6 +17,7 @@ import java.util.List;
 public class UserMapper {
 
     private final PasswordEncoder passwordEncoder;
+    private final PlaceMapper placeMapper;
 
     public User mapToUser(UserRequestDTO request) {
         User user = new User();
@@ -32,12 +34,8 @@ public class UserMapper {
         if (user.getImage() != null) {
             response.setProfilePictureBase64(ImageUtil.encodeImageToBase64String(user.getImage()));
         }
-        List<Long> comments = new ArrayList<>();
-        user.getComments().forEach((comment) -> comments.add(comment.getId()));
-        response.setCommentIds(comments);
-        List<Long> favorites = new ArrayList<>();
-        user.getFavorites().forEach((place) -> favorites.add(place.getId()));
-        response.setFavoritePlaceIds(favorites);
+        List<PlaceResponseDTO> favorites = placeMapper.mapToResponseDTOList(user.getFavorites());
+        response.setFavorites(favorites);
         return response;
     }
 }

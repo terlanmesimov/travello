@@ -9,9 +9,21 @@ const PlaceGrid = ({ resultData }) => {
         <div className="container">
           <div className="place-cards">
             {resultData.map((place) => (
-              <div className="place-card" key={place.id} onClick={()=> navigate(`/card-detail/${place.id}`)}>
+              <div
+                className="place-card"
+                key={place.id}
+                onClick={() => navigate(`/card-detail/${place.id}`)}
+              >
                 <img
-                  src={`data:image/jpeg;base64,${place.imageBase64}`}
+                  src={
+                    place.imageBase64 &&
+                    typeof place.imageBase64 === "string" &&
+                    place.imageBase64.trim() !== ""
+                      ? place.imageBase64.startsWith("data:")
+                        ? place.imageBase64
+                        : `data:image/png;base64,${place.imageBase64}`
+                      : place.imageBase64
+                  }
                   alt={place.name}
                 />
                 <div className="place-info">

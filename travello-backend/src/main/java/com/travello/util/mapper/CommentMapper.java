@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Component
@@ -22,10 +23,11 @@ public class CommentMapper {
     private final PlaceRepository placeRepository;
     private final UserRepository userRepository;
 
-    public BlogComment mapToBlogComment(CommentRequestDTO request) {
+    public BlogComment mapToBlogComment(CommentRequestDTO request, User user) {
         BlogComment comment = new BlogComment();
         Blog blog = blogRepository.findById(request.getBlogId()).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Blog Not Found"));
+        comment.setUser(user);
         comment.setBlog(blog);
         comment.setText(request.getText());
         comment.setCreatedAt(LocalDateTime.now());
@@ -50,7 +52,13 @@ public class CommentMapper {
         response.setUsername(comment.getUser().getUsername());
         response.setText(comment.getText());
         response.setBlogId(comment.getBlog().getId());
+        response.setBlogName(comment.getBlog().getName());
         response.setCreatedAt(comment.getCreatedAt());
+        if (comment.getUser().getImage() != null) {
+            String profilePicture = ImageUtil.joinBase64(comment.getUser().getImageType(),
+                    ImageUtil.encodeImageToBase64String(comment.getUser().getImage()));
+            response.setProfilePictureBase64(profilePicture);
+        }
         return response;
     }
 
@@ -61,6 +69,7 @@ public class CommentMapper {
         response.setText(comment.getText());
         response.setRating(comment.getRating());
         response.setPlaceId(comment.getPlace().getId());
+        response.setPlaceName(comment.getPlace().getName());
         response.setCreatedAt(comment.getCreatedAt());
         if (comment.getUser().getImage() != null) {
             String profilePicture = ImageUtil.joinBase64(comment.getUser().getImageType(),
