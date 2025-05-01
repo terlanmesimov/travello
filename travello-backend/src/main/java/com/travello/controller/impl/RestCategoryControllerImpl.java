@@ -3,27 +3,29 @@ package com.travello.controller.impl;
 import com.travello.controller.RestCategoryController;
 import com.travello.dto.response.CategoryResponseDTO;
 import com.travello.service.CategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/rest/api/category")
 @CrossOrigin(origins = "http://localhost:3000")
 public class RestCategoryControllerImpl implements RestCategoryController {
-    @Autowired
-    private CategoryService categoryService;
+
+    private final CategoryService categoryService;
 
     @Override
     @GetMapping("/get-by-id/{id}")
-    public CategoryResponseDTO getCategoryById(@PathVariable Long id) {
+    public ResponseEntity<CategoryResponseDTO> getCategoryById(@PathVariable Long id) {
         return categoryService.getCategoryById(id);
     }
 
     @Override
     @GetMapping("/list")
-    public List<CategoryResponseDTO> getCategoryList() {
+    public ResponseEntity<List<CategoryResponseDTO>> getCategoryList() {
         return categoryService.getCategoryList();
     }
 }

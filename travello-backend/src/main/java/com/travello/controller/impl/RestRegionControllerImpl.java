@@ -3,17 +3,18 @@ package com.travello.controller.impl;
 import com.travello.controller.RestRegionController;
 import com.travello.dto.response.RegionResponseDTO;
 import com.travello.service.RegionService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/rest/api/region")
 @CrossOrigin(origins = "http://localhost:3000")
 public class RestRegionControllerImpl implements RestRegionController {
-    @Autowired
-    private RegionService regionService;
+
+    private final RegionService regionService;
 
     @Override
     @GetMapping("/get-by-id/{id}")

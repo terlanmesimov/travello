@@ -11,7 +11,6 @@ import com.travello.repository.CategoryRepository;
 import com.travello.repository.RegionRepository;
 import com.travello.util.ImageUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

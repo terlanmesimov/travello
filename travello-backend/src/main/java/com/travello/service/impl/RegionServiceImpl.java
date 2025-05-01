@@ -4,19 +4,21 @@ import com.travello.dto.response.RegionResponseDTO;
 import com.travello.entity.Region;
 import com.travello.repository.RegionRepository;
 import com.travello.service.RegionService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class RegionServiceImpl implements RegionService {
-    @Autowired
-    private RegionRepository regionRepository;
+
+    private final RegionRepository regionRepository;
 
     @Override
-    public List<RegionResponseDTO> getRegionList() {
+    public ResponseEntity<List<RegionResponseDTO>> getRegionList() {
         List<RegionResponseDTO> response = new ArrayList<>();
         List<Region> regionList = regionRepository.findAll();
         regionList.forEach(region -> {
@@ -24,15 +26,15 @@ public class RegionServiceImpl implements RegionService {
             region.getPlaces().forEach(place -> placeIds.add(place.getId()));
             response.add(new RegionResponseDTO(region.getId(), region.getName(), placeIds));
         });
-        return response;
+        return ResponseEntity.ok(response);
     }
 
     @Override
-    public RegionResponseDTO getRegionById(Long id) {
+    public ResponseEntity<RegionResponseDTO> getRegionById(Long id) {
         Region region = regionRepository.findById(id).orElseThrow();
         List<Long> placeIds = new ArrayList<>();
         region.getPlaces().forEach(place -> placeIds.add(place.getId()));
         RegionResponseDTO response = new RegionResponseDTO(region.getId(), region.getName(), placeIds);
-        return response;
+        return ResponseEntity.ok(response);
     }
 }
