@@ -7,6 +7,7 @@ import com.travello.dto.response.CommentResponseDTO;
 import com.travello.dto.response.PlaceResponseDTO;
 import com.travello.service.PlaceService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,14 +16,14 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/rest/api/place")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:5000"})
 public class RestPlaceControllerImpl implements RestPlaceController {
 
     private final PlaceService placeService;
 
     @Override
-    @PostMapping("/save")
-    public ResponseEntity<PlaceResponseDTO> savePlace(@RequestBody PlaceRequestDTO placeRequestDTO) {
+    @PostMapping( value = "/save" ,consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<PlaceResponseDTO> savePlace(@ModelAttribute PlaceRequestDTO placeRequestDTO) {
         return placeService.savePlace(placeRequestDTO);
     }
 
@@ -45,9 +46,9 @@ public class RestPlaceControllerImpl implements RestPlaceController {
     }
 
     @Override
-    @PutMapping("/update/{id}")
+    @PutMapping(value="/update/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<PlaceResponseDTO> updatePlace(@PathVariable Long id,
-                                                        @RequestBody PlaceRequestDTO placeRequestDTO) {
+                                                        @ModelAttribute PlaceRequestDTO placeRequestDTO) {
         return placeService.updatePlace(id, placeRequestDTO);
     }
 

@@ -5,7 +5,7 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import RenderStars from "../utils/StarUtil";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import { GlobalContext } from "../utils/GlobalProvider";
+import { GlobalContext } from "../routes/GlobalProvider";
 import { useForm } from "react-hook-form";
 import defaultProfilePhoto from "../assets/images/default_profile_photo.png";
 

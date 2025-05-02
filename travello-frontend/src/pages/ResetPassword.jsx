@@ -2,7 +2,7 @@ import axios from "axios";
 import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { GlobalContext } from "../utils/GlobalProvider";
+import { GlobalContext } from "../routes/GlobalProvider";
 
 const ResetPassword = () => {
   const [isSentOtp, setIsSentOtp] = useState(false);

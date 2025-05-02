@@ -3,6 +3,7 @@ package com.travello.dto.request;
 import com.travello.dto.response.CommentResponseDTO;
 import com.travello.entity.embedded.Location;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class PlaceRequestDTO {
     private Long categoryId;
     private String description;
     private Double rating;
-    private String image;
-    private Location location;
-    private List<CommentResponseDTO> comments;
+    private MultipartFile image;
+    private Double longitude;
+    private Double latitude;
 }

@@ -1,7 +1,7 @@
 import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import { GlobalContext } from "../utils/GlobalProvider";
+import { GlobalContext } from "../routes/GlobalProvider";
 import defaultProfilePhoto from "../assets/images/default_profile_photo.png";
 import RenderStars from "../utils/StarUtil";
 import axios from "axios";

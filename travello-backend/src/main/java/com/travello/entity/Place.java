@@ -31,6 +31,7 @@ public class Place {
     @Lob
     @Column(columnDefinition = "MEDIUMBLOB")
     private byte[] image;
+    private String imageType;
     @ManyToMany(mappedBy = "places")
     private List<Blog> blogs;
     @ManyToMany(mappedBy = "favorites")

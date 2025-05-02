@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useNavigate, useParams } from "react-router-dom";
 import { useCallback, useContext, useEffect, useState } from "react";
-import { GlobalContext } from "../utils/GlobalProvider";
+import { GlobalContext } from "../routes/GlobalProvider";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 

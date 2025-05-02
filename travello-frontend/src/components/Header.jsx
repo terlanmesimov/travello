@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { GlobalContext } from "../utils/GlobalProvider";
+import { GlobalContext } from "../routes/GlobalProvider";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

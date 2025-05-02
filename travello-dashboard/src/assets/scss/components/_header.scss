@@ -1,0 +1,24 @@
+.header {
+    background-color: #003399;
+    padding: 1rem 0;
+    .container {
+      padding: 0 1rem;
+      .nav {
+        justify-self: center;
+        .heading {
+          font-family: 'Leckerli One', cursive;
+          font-size: 40px;
+          font-weight: 700;
+          color: #fff;
+          margin: 0;
+          text-decoration: none;
+          @media (max-width: 768px) {
+            font-size: 30px;
+          }
+          @media (max-width: 480px) {
+            font-size: 24px;
+          }
+        }
+      }
+    }
+  }

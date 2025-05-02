@@ -61,6 +61,7 @@ public class PlaceServiceImpl implements PlaceService {
 
     @Override
     public ResponseEntity<PlaceResponseDTO> updatePlace(Long id, PlaceRequestDTO placeRequestDTO) {
+        System.out.println(placeRequestDTO.getImage());
         Place place = placeMapper.mapToPlace(placeRequestDTO);
         place.setId(id);
         Place updatedPlace = placeRepository.save(place);

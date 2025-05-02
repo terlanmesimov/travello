@@ -12,13 +12,13 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/rest/api/category")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:5000"})
 public class RestCategoryControllerImpl implements RestCategoryController {
 
     private final CategoryService categoryService;
 
     @Override
-    @GetMapping("/get-by-id/{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<CategoryResponseDTO> getCategoryById(@PathVariable Long id) {
         return categoryService.getCategoryById(id);
     }

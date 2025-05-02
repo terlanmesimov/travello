@@ -1,6 +1,7 @@
 package com.travello.util;
 
 import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 import java.util.Base64;
 import java.util.HashMap;
