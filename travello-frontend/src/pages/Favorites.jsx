@@ -57,7 +57,15 @@ const Favorites = () => {
                 return (
                   <div key={favorite.id} className="favorite-card">
                     <img
-                      src={`data:image/png;base64,${favorite.imageBase64}`}
+                      src={
+                        favorite.imageBase64 &&
+                        typeof favorite.imageBase64 === "string" &&
+                        favorite.imageBase64.trim() !== ""
+                          ? favorite.imageBase64.startsWith("data:")
+                            ? favorite.imageBase64
+                            : `data:image/png;base64,${favorite.imageBase64}`
+                          : favorite.imageBase64
+                      }
                       alt={favorite.name}
                       className="favorite-image"
                     />

@@ -85,7 +85,7 @@ const Place = () => {
     fetchPlaces();
     fetchRegions();
     fetchCategories();
-  }, [places]);
+  }, []);
 
   const filteredPlaces = places.filter((place) =>
     place.name.toLowerCase().includes(searchTerm.toLowerCase())

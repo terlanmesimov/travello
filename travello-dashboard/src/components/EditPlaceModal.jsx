@@ -68,7 +68,10 @@ const EditPlaceModal = ({
       },
     });
 
-    return location.lat !== 0 && location.lng !== 0 ? (
+    return location.lat !== 0 &&
+      location.lng !== 0 &&
+      !isNaN(location.lat) &&
+      !isNaN(location.lng) ? (
       <Marker position={[location.lat, location.lng]} />
     ) : null;
   };
@@ -84,8 +87,8 @@ const EditPlaceModal = ({
   };
 
   function base64ToFile(base64String, filename) {
-    const byteString = atob(base64String?.split(",")[1]); // Base64 stringi deşifrə etmək
-    const mimeType = base64String?.split(",")[0].split(":")[1].split(";")[0]; // MIME type çıxarmaq
+    const byteString = atob(base64String?.split(",")[1]);
+    const mimeType = base64String?.split(",")[0].split(":")[1].split(";")[0];
 
     const uintArray = new Uint8Array(byteString.length);
     for (let i = 0; i < byteString.length; i++) {
@@ -131,7 +134,7 @@ const EditPlaceModal = ({
     <Modal
       isOpen={isOpen}
       onRequestClose={onClose}
-      className="modal-content"
+      className="modal-content edit-place-modal"
       overlayClassName="modal-overlay"
     >
       <h2 className="modal-title">Edit Place</h2>

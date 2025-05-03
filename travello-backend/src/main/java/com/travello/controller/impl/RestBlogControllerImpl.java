@@ -6,6 +6,7 @@ import com.travello.dto.request.CommentRequestDTO;
 import com.travello.dto.response.BlogResponseDTO;
 import com.travello.service.BlogService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,14 +15,14 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/rest/api/blog")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:5000"})
 public class RestBlogControllerImpl implements RestBlogController {
 
     private final BlogService blogService;
 
     @Override
-    @PostMapping("/save")
-    public ResponseEntity<BlogResponseDTO> saveBlog(@RequestBody BlogRequestDTO blogRequestDTO) {
+    @PostMapping(value = "/save", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<BlogResponseDTO> saveBlog(@ModelAttribute BlogRequestDTO blogRequestDTO) {
         return blogService.saveBlog(blogRequestDTO);
     }
 
@@ -44,8 +45,8 @@ public class RestBlogControllerImpl implements RestBlogController {
     }
 
     @Override
-    @PutMapping("/update/{id}")
-    public ResponseEntity<BlogResponseDTO> updateBlog(@PathVariable Long id, @RequestBody BlogRequestDTO blogRequestDTO) {
+    @PutMapping(value = "/update/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<BlogResponseDTO> updateBlog(@PathVariable Long id, @ModelAttribute BlogRequestDTO blogRequestDTO) {
         return blogService.updateBlog(id, blogRequestDTO);
     }
 

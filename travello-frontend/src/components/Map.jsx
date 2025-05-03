@@ -64,7 +64,15 @@ const Map = () => {
                       }}
                     >
                       <img
-                        src={`data:image/jpeg;base64,${selectedPlace.imageBase64}`}
+                        src={
+                          place.imageBase64 &&
+                          typeof place.imageBase64 === "string" &&
+                          place.imageBase64.trim() !== ""
+                            ? place.imageBase64.startsWith("data:")
+                              ? place.imageBase64
+                              : `data:image/png;base64,${place.imageBase64}`
+                            : place.imageBase64
+                        }
                         alt={selectedPlace.name}
                         style={{
                           width: "200px",

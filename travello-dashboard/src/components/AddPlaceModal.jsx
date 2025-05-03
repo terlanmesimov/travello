@@ -97,7 +97,7 @@ const AddPlaceModal = ({ isOpen, onClose, onAdd, categories, regions }) => {
     <Modal
       isOpen={isOpen}
       onRequestClose={onClose}
-      className="modal-content"
+      className="modal-content add-place-modal"
       overlayClassName="modal-overlay"
     >
       <h2 className="modal-title">Add Place</h2>
