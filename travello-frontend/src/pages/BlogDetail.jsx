@@ -113,7 +113,7 @@ const BlogDetail = () => {
 
           <section className="comments-section">
             <div className="container">
-              <h2 className="comments-title">Şərhlər (4)</h2>
+              <h2 className="comments-title">Şərhlər</h2>
               <form
                 onSubmit={handleSubmit(addComment)}
                 className="comment-form"

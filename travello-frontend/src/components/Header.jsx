@@ -1,96 +1,97 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { GlobalContext } from "../routes/GlobalProvider";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { hasToken, userData } = useContext(GlobalContext);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const { hasToken, userData, setHasToken } = useContext(GlobalContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const logout = () => {
+    const isConfirmed = window.confirm("Çıxış etmək istədiyinizə əminsiniz ?");
+    if (isConfirmed) {
+      localStorage.removeItem("token");
+      setHasToken(false);
+      navigate("/");
+    }
+  };
 
   return (
-    <header className="header">
+    <header className={`header ${isScrolled ? "scrolled" : ""}`}>
       <div className="container">
         <nav className="nav">
-          <a href="/" className="heading">
-            Travello
+          <a href="/" className="logo">
+            <span className="logo-text">Travello</span>
+            <span className="logo-icon">✈️</span>
           </a>
+          
           <div
             className="menu-toggle"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            ☰
+            <span></span>
+            <span></span>
+            <span></span>
           </div>
-          <div className={`side-menu ${isMenuOpen ? "open" : ""}`}>
-            <div className="close-btn" onClick={() => setIsMenuOpen(false)}>
-              ✖
-            </div>
-            <a className="nav-link" href="/">
-              Ana Səhifə
-            </a>
-            <a className="nav-link" href="/blog">
-              Bloq
-            </a>
-            <a className="nav-link" href="/about">
-              Haqqımızda
-            </a>
-            {!hasToken && (
-              <a className="nav-link" href="/login">
-                Daxil Ol
-              </a>
-            )}
-            {hasToken && (
-              <>
-                <a className="nav-link" href="/account">
-                  Hesabım
-                </a>
-                <a className="nav-link" href="/favorites">
-                  Favoritlər
-                </a>
-              </>
-            )}
-          </div>
+          
           <div className={`nav-links ${isMenuOpen ? "open" : ""}`}>
             <a className="nav-link" href="/">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-              </svg>
+              <i className="nav-icon home-icon"></i>
               Ana Səhifə
             </a>
             <a className="nav-link" href="/blog">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 12h-2v-2h2v2zm0-4h-2V6h2v4z" />
-              </svg>
+              <i className="nav-icon blog-icon"></i>
               Bloq
             </a>
             <a className="nav-link" href="/about">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
-              </svg>
+              <i className="nav-icon about-icon"></i>
               Haqqımızda
             </a>
+            
+            <div className="nav-divider"></div>
+            
             {!hasToken && (
-              <>
-                <a className="nav-link" href="/login">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
-                  </svg>
+              <div className="auth-buttons">
+                <a className="btn btn-outline" href="/login">
                   Daxil Ol
                 </a>
-              </>
-            )}
-            {hasToken && (
-              <>
-                <a className="nav-link" href="/account">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
-                  </svg>
-                  {userData.username}
+                <a className="btn" href="/register">
+                  Qeydiyyat
                 </a>
-                <a className="nav-link" href="/favorites">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                  </svg>
+              </div>
+            )}
+            
+            {hasToken && (
+              <div className="user-menu">
+                <a className="nav-link favorites-link" href="/favorites">
+                  <i className="nav-icon favorite-icon"></i>
                   Favoritlər
                 </a>
-              </>
+                <div className="user-profile">
+                  <div className="user-avatar">
+                    {userData.username ? userData.username.charAt(0).toUpperCase() : "U"}
+                  </div>
+                  <div className="dropdown-menu">
+                    <a href="/account">Profilim</a>
+                    <a href="/favorites">Favoritlərim</a>
+                    <button className="logout-button" onClick={logout}>Çıxış</button>
+                  </div>
+                </div>
+              </div>
             )}
           </div>
         </nav>
@@ -99,4 +100,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Header; 

@@ -1,33 +1,46 @@
 .card-detail {
-  padding: 4rem 0;
-  background-color: #f8f9fa;
+  padding: 80px 0;
+  background-color: var(--light-bg);
+  
   .container {
-    padding: 0 1rem;
+    padding: 0 20px;
+    
     .place-images {
-      margin-bottom: 2rem;
+      margin-top: 40px;
+      margin-bottom: 40px;
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--border-radius);
+      box-shadow: var(--card-shadow);
 
       .place-main-image {
         width: 100%;
-        height: 400px;
-        object-fit: contain;
-        border-radius: 8px;
-        margin-bottom: 1rem;
+        height: 450px;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+        
+        &:hover {
+          transform: scale(1.02);
+        }
       }
 
       .place-thumbnails {
         display: flex;
-        gap: 1rem;
+        gap: 15px;
+        margin-top: 15px;
 
         .place-thumbnail {
-          width: 200px;
-          height: 150px;
+          width: 100px;
+          height: 80px;
           object-fit: cover;
-          border-radius: 8px;
+          border-radius: var(--border-radius);
           cursor: pointer;
-          transition: transform 0.3s ease;
+          transition: var(--transition);
+          border: 2px solid transparent;
 
-          &:hover {
-            transform: scale(1.05);
+          &:hover, &.active {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
           }
         }
       }
@@ -36,181 +49,265 @@
     // Məkan Məlumatları
     .place-info {
       background-color: #fff;
-      padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      margin-bottom: 2rem;
+      padding: 40px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--card-shadow);
+      margin-bottom: 40px;
+      transition: var(--transition);
+      
+      &:hover {
+        box-shadow: var(--card-shadow-hover);
+      }
 
       .place-title {
-        font-family: "Poppins", sans-serif;
-        font-size: 2rem;
+        font-family: "Playfair Display", serif;
+        font-size: 2.2rem;
         font-weight: 700;
-        color: #003399;
-        margin-bottom: 1rem;
+        color: var(--text-color);
+        margin-bottom: 20px;
+        position: relative;
+        
+        &:after {
+          content: '';
+          position: absolute;
+          bottom: -10px;
+          left: 0;
+          width: 50px;
+          height: 3px;
+          background-color: var(--primary-color);
+        }
       }
 
       .place-description {
-        font-family: "Open Sans", sans-serif;
-        font-size: 1rem;
-        color: #666;
-        margin-bottom: 1.5rem;
+        font-size: 1.1rem;
+        color: var(--light-text);
+        margin-bottom: 30px;
+        line-height: 1.8;
       }
 
       .place-rating {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
-        margin-bottom: 1.5rem;
+        gap: 12px;
+        margin-bottom: 30px;
+        background-color: var(--light-bg);
+        padding: 15px 20px;
+        border-radius: 30px;
+        display: inline-flex;
 
         .rating-stars {
-          font-size: 1.5rem;
+          font-size: 1.3rem;
           color: #ffc107;
         }
 
         .rating-value {
-          font-family: "Poppins", sans-serif;
-          font-size: 1.25rem;
+          font-size: 1.1rem;
           font-weight: 600;
-          color: #003399;
+          color: var(--text-color);
         }
       }
 
       .place-favorite {
-        padding: 0.75rem 1.5rem;
-        background-color: #003399;
+        padding: 12px 24px;
+        background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
         color: #fff;
         border: none;
-        border-radius: 8px;
-        font-family: "Poppins", sans-serif;
+        border-radius: 30px;
         font-size: 1rem;
         font-weight: 600;
         cursor: pointer;
-        transition: background-color 0.3s ease;
-
+        transition: var(--transition);
+        box-shadow: 0 4px 10px rgba(255, 107, 107, 0.2);
+        
         &:hover {
-          background-color: #002266;
+          transform: translateY(-3px);
+          box-shadow: 0 6px 15px rgba(255, 107, 107, 0.3);
+        }
+        
+        &:active {
+          transform: translateY(-1px);
         }
       }
     }
 
     .place-map {
-      margin-top: 2rem;
+      margin-bottom: 40px;
 
       .map-title {
-        font-family: "Poppins", sans-serif;
-        font-size: 1.5rem;
+        font-family: "Playfair Display", serif;
+        font-size: 1.8rem;
         font-weight: 600;
-        color: #003399;
-        margin-bottom: 1rem;
+        color: var(--text-color);
+        margin-bottom: 20px;
+        position: relative;
+        
+        &:after {
+          content: '';
+          position: absolute;
+          bottom: -10px;
+          left: 0;
+          width: 40px;
+          height: 2px;
+          background-color: var(--primary-color);
+        }
+      }
+      
+      .leaflet-container {
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        box-shadow: var(--card-shadow);
+        transition: var(--transition);
+        
+        &:hover {
+          box-shadow: var(--card-shadow-hover);
+        }
       }
     }
+    
     // Şərh Bölməsi
     .place-comments {
       background-color: #fff;
-      padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--card-shadow);
+      transition: var(--transition);
+      
+      &:hover {
+        box-shadow: var(--card-shadow-hover);
+      }
 
       .comments-title {
-        font-family: "Poppins", sans-serif;
-        font-size: 1.5rem;
+        font-family: "Playfair Display", serif;
+        font-size: 1.8rem;
         font-weight: 600;
-        color: #003399;
-        margin-bottom: 1.5rem;
+        color: var(--text-color);
+        margin-bottom: 25px;
+        position: relative;
+        
+        &:after {
+          content: '';
+          position: absolute;
+          bottom: -10px;
+          left: 0;
+          width: 40px;
+          height: 2px;
+          background-color: var(--primary-color);
+        }
       }
 
       // Şərh Formu
       .comment-form {
-        margin-bottom: 2rem;
+        margin-bottom: 40px;
+        padding: 25px;
+        background-color: var(--light-bg);
+        border-radius: var(--border-radius);
+
+        .form-group {
+          margin-bottom: 20px;
+        }
 
         .comment-input {
           width: 100%;
-          padding: 1rem;
-          border: 2px solid #ddd;
-          border-radius: 8px;
-          font-family: "Open Sans", sans-serif;
+          padding: 15px 20px;
+          border: 1px solid #e1e1e1;
+          border-radius: var(--border-radius);
           font-size: 1rem;
-          color: #333;
+          color: var(--text-color);
+          transition: var(--transition);
           resize: vertical;
-          margin-bottom: 1rem;
 
           &:focus {
-            border-color: #003399;
+            border-color: var(--secondary-color);
             outline: none;
+            box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.1);
           }
 
           &::placeholder {
-            color: #666;
+            color: var(--light-text);
           }
         }
 
         .comment-rating {
           display: flex;
           align-items: center;
-          gap: 0.5rem;
-          margin-bottom: 1rem;
+          gap: 12px;
 
           .rating-label {
-            font-family: "Open Sans", sans-serif;
             font-size: 1rem;
-            color: #333;
+            color: var(--text-color);
+            font-weight: 500;
           }
 
           .rating-select {
-            padding: 0.5rem;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-family: "Open Sans", sans-serif;
+            padding: 10px 15px;
+            border: 1px solid #e1e1e1;
+            border-radius: 20px;
             font-size: 1rem;
-            color: #333;
+            color: var(--text-color);
+            background-color: white;
             cursor: pointer;
-            transition: border-color 0.3s ease;
+            transition: var(--transition);
 
             &:focus {
-              border-color: #003399;
+              border-color: var(--secondary-color);
               outline: none;
+              box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.1);
             }
           }
         }
 
         .comment-submit {
-          padding: 0.75rem 1.5rem;
-          background-color: #003399;
+          padding: 12px 24px;
+          background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
           color: #fff;
           border: none;
-          border-radius: 8px;
-          font-family: "Poppins", sans-serif;
+          border-radius: 30px;
           font-size: 1rem;
           font-weight: 600;
           cursor: pointer;
-          transition: background-color 0.3s ease;
-
+          transition: var(--transition);
+          box-shadow: 0 4px 10px rgba(255, 107, 107, 0.2);
+          
           &:hover {
-            background-color: #002266;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(255, 107, 107, 0.3);
+          }
+          
+          &:active {
+            transform: translateY(-1px);
           }
         }
       }
 
       // Şərh Listi
       .comment-list {
+        display: grid;
+        gap: 20px;
+        
         .comment {
           display: flex;
           align-items: flex-start;
-          padding: 1rem;
-          border: 1px solid #ddd;
-          border-radius: 8px;
-          margin-bottom: 1rem;
-          background-color: #fff;
-          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+          padding: 20px;
+          border: 1px solid #e1e1e1;
+          border-radius: var(--border-radius);
+          background-color: var(--light-bg);
+          transition: var(--transition);
+          
+          &:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+          }
 
           .comment-left {
-            margin-right: 1rem;
+            margin-right: 15px;
 
             .comment-profile-image {
-              width: 50px;
-              height: 50px;
+              width: 60px;
+              height: 60px;
               border-radius: 50%;
               object-fit: cover;
+              border: 3px solid white;
+              box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
             }
           }
 
@@ -221,64 +318,65 @@
               display: flex;
               justify-content: space-between;
               align-items: center;
-              margin-bottom: 0.5rem;
+              margin-bottom: 10px;
 
               .comment-author {
-                font-family: "Poppins", sans-serif;
-                font-size: 1rem;
+                font-size: 1.1rem;
                 font-weight: 600;
-                color: #003399;
+                color: var(--text-color);
               }
 
               .comment-date {
-                font-family: "Open Sans", sans-serif;
-                font-size: 0.8rem;
-                color: #666;
+                font-size: 0.85rem;
+                color: var(--light-text);
+                font-style: italic;
               }
             }
 
             .comment-text {
-              font-family: "Open Sans", sans-serif;
-              font-size: 0.9rem;
-              color: #333;
-              margin-bottom: 0.5rem;
+              font-size: 1rem;
+              color: var(--light-text);
+              margin-bottom: 15px;
+              line-height: 1.6;
             }
 
             .comment-rating {
-              margin-bottom: 0.5rem;
+              margin-bottom: 15px;
+              font-size: 0.9rem;
+              color: #ffc107;
             }
 
             .comment-actions {
               display: flex;
-              gap: 0.5rem;
+              gap: 10px;
 
-              .comment-edit,
-              .comment-delete {
-                padding: 0.5rem 1rem;
-                font-family: "Poppins", sans-serif;
-                font-size: 0.8rem;
-                font-weight: 600;
+              .comment-edit, .comment-delete {
+                padding: 8px 15px;
+                font-size: 0.85rem;
+                font-weight: 500;
                 border: none;
-                border-radius: 5px;
+                border-radius: 20px;
                 cursor: pointer;
-                transition: background-color 0.3s ease;
+                transition: var(--transition);
+              }
 
-                &.comment-edit {
-                  background-color: #ffc107;
-                  color: #fff;
-
-                  &:hover {
-                    background-color: #e0a800;
-                  }
+              .comment-edit {
+                background-color: var(--secondary-color);
+                color: white;
+                
+                &:hover {
+                  background-color: darken(#4ECDC4, 10%);
+                  transform: translateY(-2px);
                 }
+              }
 
-                &.comment-delete {
-                  background-color: #ff4d4d;
-                  color: #fff;
-
-                  &:hover {
-                    background-color: #cc0000;
-                  }
+              .comment-delete {
+                background-color: #f44336;
+                color: white;
+                
+                &:hover {
+                  background-color: darken(#f44336, 10%);
+                  transform: translateY(-2px);
                 }
               }
             }
@@ -289,6 +387,7 @@
   }
 }
 
+// Modal hissəsi
 .edit-modal {
   position: fixed;
   top: 0;
@@ -300,83 +399,88 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
-
+  
   .edit-modal-content {
-    background-color: #fff;
-    padding: 2rem;
-    border-radius: 8px;
-    width: 400px;
+    background-color: white;
+    padding: 30px;
+    border-radius: var(--border-radius);
+    width: 90%;
+    max-width: 500px;
     position: relative;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    
     h2 {
-      font-family: "Poppins", sans-serif;
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
+      font-family: "Playfair Display", serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--text-color);
+      margin-bottom: 20px;
       text-align: center;
     }
-
+    
     .close-modal {
       position: absolute;
-      top: 10px;
-      right: 10px;
+      top: 15px;
+      right: 15px;
       background: none;
       border: none;
       font-size: 1.5rem;
       cursor: pointer;
-      color: #333;
-
+      color: var(--light-text);
+      transition: var(--transition);
+      
       &:hover {
-        color: #ff4d4d;
+        color: var(--primary-color);
+        transform: rotate(90deg);
       }
     }
-
-    .edit-comment-input {
-      width: 100%;
-      padding: 0.75rem;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      font-family: "Open Sans", sans-serif;
-      font-size: 1rem;
-      margin-bottom: 1rem;
-      resize: none;
-
-      &:focus {
-        border-color: #003399;
-        outline: none;
+    
+    .form-group {
+      margin-bottom: 20px;
+      
+      label {
+        display: block;
+        font-size: 1rem;
+        color: var(--text-color);
+        margin-bottom: 8px;
+      }
+      
+      .edit-comment-input,
+      .edit-rating-select {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #e1e1e1;
+        border-radius: var(--border-radius);
+        font-size: 1rem;
+        transition: var(--transition);
+        
+        &:focus {
+          border-color: var(--secondary-color);
+          outline: none;
+          box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.1);
+        }
+      }
+      
+      .edit-comment-input {
+        resize: vertical;
       }
     }
-
-    .edit-rating-select {
-      width: 100%;
-      padding: 0.5rem;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      font-family: "Open Sans", sans-serif;
-      font-size: 1rem;
-      margin-bottom: 1rem;
-
-      &:focus {
-        border-color: #003399;
-        outline: none;
-      }
-    }
-
+    
     .save-comment {
       width: 100%;
-      padding: 0.75rem;
-      background-color: #003399;
-      color: #fff;
+      padding: 12px;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      color: white;
       border: none;
-      border-radius: 5px;
-      font-family: "Poppins", sans-serif;
+      border-radius: 30px;
       font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
-      transition: background-color 0.3s ease;
-
+      transition: var(--transition);
+      
       &:hover {
-        background-color: #002266;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 15px rgba(255, 107, 107, 0.3);
       }
     }
   }

@@ -1,80 +1,79 @@
+import React from "react";
+
 const Footer = () => {
   return (
-    <>
-      <footer className="footer">
+    <footer className="footer">
+      <div className="footer-top">
         <div className="container">
-          <div className="footer-content">
-            <div className="footer-section">
-              <h3 className="footer-heading">Travello</h3>
-              <p className="footer-text">
-                Azərbaycanın görməli yerlərini kəşf edin və unudulmaz təcrübələr
-                yaşayın.
+          <div className="footer-columns">
+            <div className="footer-column">
+              <div className="footer-logo">
+                <span className="logo-text">Travello</span>
+                <span className="logo-icon">✈️</span>
+              </div>
+              <p className="footer-description">
+                Azərbaycanın və dünyanın görməli yerlərini kəşf edin. 
+                Mükəmməl səyahət təcrübəsi üçün ehtiyacınız olan hər şey burada.
               </p>
+              <div className="social-links">
+                <a href="#" className="social-link">
+                  <i className="social-icon facebook"></i>
+                </a>
+                <a href="#" className="social-link">
+                  <i className="social-icon instagram"></i>
+                </a>
+                <a href="#" className="social-link">
+                  <i className="social-icon twitter"></i>
+                </a>
+                <a href="#" className="social-link">
+                  <i className="social-icon youtube"></i>
+                </a>
+              </div>
             </div>
-            <div className="footer-section">
-              <h4 className="footer-subheading">Səhifələr</h4>
+            
+            <div className="footer-column">
+              <h3 className="footer-title">Kəşf et</h3>
               <ul className="footer-links">
-                <li>
-                  <a href="/" className="footer-link">
-                    Ana Səhifə
-                  </a>
+                <li><a href="/">Ana Səhifə</a></li>
+                <li><a href="/blog">Bloq</a></li>
+                <li><a href="/about">Haqqımızda</a></li>
+              </ul>
+            </div>
+            
+            <div className="footer-column">
+              <h3 className="footer-title">Əlaqə</h3>
+              <ul className="contact-list">
+                <li className="contact-item">
+                  <i className="contact-icon phone-icon"></i>
+                  <span>+994 12 345 67 89</span>
                 </li>
-                <li>
-                  <a href="/blog" className="footer-link">
-                    Blog
-                  </a>
+                <li className="contact-item">
+                  <i className="contact-icon email-icon"></i>
+                  <span>info@travello.az</span>
                 </li>
-                <li>
-                  <a href="/about" className="footer-link">
-                    Haqqımızda
-                  </a>
+                <li className="contact-item">
+                  <i className="contact-icon location-icon"></i>
+                  <span>Bakı, Azərbaycan</span>
                 </li>
               </ul>
             </div>
-            <div className="footer-section">
-              <h4 className="footer-subheading">Əlaqə</h4>
-              <ul className="footer-contact">
-                <li>
-                  <svg
-                    className="footer-icon"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" />
-                  </svg>
-                  +994 12 345 67 89
-                </li>
-                <li>
-                  <svg
-                    className="footer-icon"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z" />
-                  </svg>
-                  info@travello.az
-                </li>
-                <li>
-                  <svg
-                    className="footer-icon"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z" />
-                  </svg>
-                  Bakı, Azərbaycan
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="footer-bottom">
-            <p className="footer-copy">
-              © {new Date().getFullYear()} Travello. Bütün hüquqlar qorunur.
-            </p>
           </div>
         </div>
-      </footer>
-    </>
+      </div>
+      
+      <div className="footer-bottom">
+        <div className="container">
+          <p className="copyright">
+            © {new Date().getFullYear()} Travello. Bütün hüquqlar qorunur.
+          </p>
+          <div className="footer-nav">
+            <a href="#">Təhlükəsizlik</a>
+            <a href="#">Məxfilik</a>
+            <a href="#">Şərtlər</a>
+          </div>
+        </div>
+      </div>
+    </footer>
   );
 };
 

@@ -1,7 +1,6 @@
 // Fonts
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;500;600;700;800&family=Leckerli+One&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap");
 // Pages
 @import "./pages/home.scss";
 @import "./pages/not-found.scss";
@@ -16,6 +15,19 @@
 // Components
 @import "./components/header";
 @import "./components/footer";
+@import "./components/search";
+
+:root {
+  --primary-color: #FF6B6B;
+  --secondary-color: #4ECDC4;
+  --accent-color: #FFE66D;
+  --text-color: #2E3440;
+  --light-text: #6C757D;
+  --light-bg: #F8F9FA;
+  --dark-bg: #292F36;
+  --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s ease-in-out;
+}
 
 * {
   margin: 0;
@@ -23,20 +35,90 @@
   box-sizing: border-box;
   text-decoration: none;
   list-style: none;
-  font-family: "Arial", sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 body {
-  background-color: #f5f5f5;
+  background-color: #fff;
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: "Playfair Display", serif;
+  font-weight: 600;
+  margin-bottom: 1rem;
 }
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
+  padding: 0 20px;
 }
 
 .page-wrapper {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+}
+
+.btn {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: var(--shadow);
+  
+  &:hover {
+    background-color: darken(#FF6B6B, 10%);
+    transform: translateY(-3px);
+  }
+  
+  &.btn-secondary {
+    background-color: var(--secondary-color);
+    
+    &:hover {
+      background-color: darken(#4ECDC4, 10%);
+    }
+  }
+  
+  &.btn-outline {
+    background-color: transparent;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    
+    &:hover {
+      background-color: var(--primary-color);
+      color: white;
+    }
+  }
+}
+
+.section {
+  padding: 80px 0;
+}
+
+.card {
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  
+  &:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .section {
+    padding: 50px 0;
+  }
 }

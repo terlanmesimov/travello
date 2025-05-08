@@ -1,102 +1,168 @@
 .account {
-  padding: 4rem 0;
-  background-color: #f8f9fa;
+  padding: 80px 0;
+  background-color: var(--light-bg);
 
   .container {
-    padding: 0 1rem;
+    padding: 0 20px;
 
     .account-heading {
-      font-family: "Poppins", sans-serif;
-      font-size: 2rem;
+      font-family: "Playfair Display", serif;
+      font-size: 2.5rem;
       font-weight: 700;
-      color: #003399;
+      color: var(--text-color);
       text-align: center;
-      margin-bottom: 2rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+      
+      &:after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 3px;
+        background-color: var(--primary-color);
+      }
     }
 
     // İstifadəçi Məlumatları
     .account-info {
       display: flex;
-      flex-wrap: wrap; // Flexbox wrap for responsiveness
+      flex-wrap: wrap;
       align-items: center;
-      gap: 2rem;
+      gap: 3rem;
       background-color: #fff;
-      padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      margin-bottom: 2rem;
+      padding: 40px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--card-shadow);
+      margin-bottom: 40px;
+      transition: var(--transition);
+      
+      &:hover {
+        box-shadow: var(--card-shadow-hover);
+      }
 
       .profile-picture {
         text-align: center;
-        flex: 1 1 100%; // Full width on smaller screens
+        flex: 0 0 300px;
+        
+        @media (max-width: 768px) {
+          flex: 1 1 100%;
+        }
 
         .profile-image {
-          width: 220px;
-          height: 220px;
+          width: 200px;
+          height: 200px;
           border-radius: 50%;
           object-fit: cover;
-          margin-bottom: 1rem;
+          margin-bottom: 1.5rem;
+          border: 4px solid var(--light-bg);
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+          transition: var(--transition);
+          
+          &:hover {
+            transform: scale(1.05);
+          }
         }
 
         .profile-actions {
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 0.5rem;
+          gap: 10px;
 
           .profile-action-button {
-            padding: 0.5rem 1rem;
-            background-color: #003399;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
             color: #fff;
             border: none;
-            border-radius: 8px;
-            font-family: "Open Sans", sans-serif;
-            font-size: 0.9rem;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 500;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: var(--transition);
 
             &:hover {
-              background-color: #002266;
+              background-color: darken(#FF6B6B, 10%);
+              transform: translateY(-3px);
             }
           }
         }
       }
 
       .user-details {
-        flex: 1 1 100%; // Full width on smaller screens
+        flex: 1;
+        
+        @media (max-width: 768px) {
+          flex: 1 1 100%;
+          text-align: center;
+        }
 
         .user-name {
-          font-family: "Poppins", sans-serif;
-          font-size: 1.5rem;
+          font-family: "Playfair Display", serif;
+          font-size: 1.8rem;
           font-weight: 600;
-          color: #003399;
-          margin-bottom: 0.5rem;
+          color: var(--text-color);
+          margin-bottom: 10px;
         }
 
         .user-email {
-          font-family: "Open Sans", sans-serif;
           font-size: 1rem;
-          color: #666;
+          color: var(--light-text);
+          margin-bottom: 25px;
+          display: inline-block;
+          position: relative;
+          
+          &:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--secondary-color);
+            
+            @media (max-width: 768px) {
+              left: 50%;
+              transform: translateX(-50%);
+            }
+          }
         }
 
         .account-actions {
-          margin-top: 20px;
+          margin-top: 30px;
           display: flex;
-          flex-wrap: wrap; // Wrap buttons for smaller screens
-          gap: 10px;
+          flex-wrap: wrap;
+          gap: 15px;
+          
+          @media (max-width: 768px) {
+            justify-content: center;
+          }
 
           .account-action-button {
-            padding: 10px 20px;
-            background-color: #003399;
+            padding: 12px 24px;
+            background-color: var(--secondary-color);
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 30px;
             cursor: pointer;
             font-size: 14px;
-            transition: background-color 0.3s ease;
+            font-weight: 500;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
 
             &:hover {
-              background-color: #002266;
+              background-color: darken(#4ECDC4, 10%);
+              transform: translateY(-3px);
+            }
+            
+            &:last-child {
+              background-color: #f44336;
+              
+              &:hover {
+                background-color: darken(#f44336, 10%);
+              }
             }
           }
         }
@@ -106,101 +172,90 @@
     // Rəylər
     .user-reviews {
       background-color: #fff;
-      padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--card-shadow);
+      transition: var(--transition);
+      
+      &:hover {
+        box-shadow: var(--card-shadow-hover);
+      }
 
       .reviews-heading {
-        font-family: "Poppins", sans-serif;
-        font-size: 1.5rem;
+        font-family: "Playfair Display", serif;
+        font-size: 1.8rem;
         font-weight: 600;
-        color: #003399;
-        margin-bottom: 1.5rem;
+        color: var(--text-color);
+        margin-bottom: 25px;
+        position: relative;
+        
+        &:after {
+          content: '';
+          position: absolute;
+          bottom: -10px;
+          left: 0;
+          width: 40px;
+          height: 2px;
+          background-color: var(--primary-color);
+        }
       }
 
       .reviews-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+        
+        @media (max-width: 768px) {
+          grid-template-columns: 1fr;
+        }
+        
         .review {
-          background-color: #f8f9fa;
-          padding: 1.5rem;
-          border-radius: 8px;
-          margin-bottom: 1rem;
+          background-color: var(--light-bg);
+          padding: 25px;
+          border-radius: var(--border-radius);
+          transition: var(--transition);
+          border-left: 3px solid var(--primary-color);
+          
+          &:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+          }
 
           .review-place {
             font-family: "Poppins", sans-serif;
-            font-size: 1.25rem;
+            font-size: 1.1rem;
             font-weight: 600;
-            color: #003399;
-            margin-bottom: 0.5rem;
+            color: var(--text-color);
+            margin-bottom: 10px;
             cursor: pointer;
+            transition: var(--transition);
+            
             &:hover {
-              text-decoration: underline;
+              color: var(--primary-color);
             }
           }
 
           .review-rating {
             font-size: 1rem;
             color: #ffc107;
-            margin-bottom: 0.5rem;
+            margin-bottom: 10px;
           }
 
           .review-text {
-            font-family: "Open Sans", sans-serif;
             font-size: 0.9rem;
-            color: #333;
-            margin-bottom: 0.5rem;
+            color: var(--light-text);
+            margin-bottom: 15px;
+            line-height: 1.6;
           }
 
           .review-date {
-            font-family: "Open Sans", sans-serif;
             font-size: 0.8rem;
-            color: #666;
+            color: var(--light-text);
             font-style: italic;
+            text-align: right;
           }
         }
       }
-    }
-  }
-
-  // Media Queries for Responsiveness
-  @media (max-width: 768px) {
-    .account-info {
-      flex-direction: column; // Stack items vertically
-    }
-
-    .profile-picture .profile-image {
-      width: 120px;
-      height: 120px;
-    }
-
-    .user-details .user-name {
-      font-size: 1.25rem;
-    }
-
-    .user-details .user-email {
-      font-size: 0.9rem;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .account-heading {
-      font-size: 1.5rem;
-    }
-
-    .account-info {
-      padding: 1rem;
-    }
-
-    .user-details .user-name {
-      font-size: 1rem;
-    }
-
-    .user-details .user-email {
-      font-size: 0.8rem;
-    }
-
-    .account-actions .account-action-button {
-      font-size: 12px;
-      padding: 8px 16px;
     }
   }
 }

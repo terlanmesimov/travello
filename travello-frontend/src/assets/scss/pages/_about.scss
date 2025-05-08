@@ -1,28 +1,41 @@
-
 .about {
-    padding: 4rem 0;
-    background-color: #f8f9fa;
+    padding: 80px 0;
+    background-color: var(--light-bg);
   
     .container {
-      padding: 0 1rem;
+      padding: 0 20px;
   
       .about-heading {
-        font-family: 'Poppins', sans-serif;
+        font-family: 'Playfair Display', serif;
         font-size: 2.5rem;
         font-weight: 700;
-        color: #003399;
+        color: var(--text-color);
         text-align: center;
-        margin-bottom: 2rem;
+        margin-bottom: 3rem;
+        position: relative;
+        
+        &:after {
+          content: '';
+          position: absolute;
+          bottom: -15px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 60px;
+          height: 3px;
+          background-color: var(--primary-color);
+        }
       }
   
       .about-content {
-        margin-bottom: 2rem;
+        margin-bottom: 60px;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
   
         .about-text {
-          font-family: 'Open Sans', sans-serif;
-          font-size: 1rem;
-          color: #666;
-          line-height: 1.6;
+          font-size: 1.1rem;
+          color: var(--light-text);
+          line-height: 1.8;
           text-align: center;
         }
       }
@@ -30,66 +43,365 @@
       .about-mission-vision {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-        gap: 2rem; // Kartlar arası boşluq
-        margin-bottom: 2rem;
+        gap: 30px;
+        margin-bottom: 60px;
   
         .mission,
         .vision {
           background-color: #fff;
-          padding: 1.5rem;
-          border-radius: 8px; 
-          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+          padding: 40px 30px;
+          border-radius: var(--border-radius);
+          box-shadow: var(--card-shadow);
+          transition: var(--transition);
+          position: relative;
+          overflow: hidden;
+          
+          &:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--card-shadow-hover);
+          }
+          
+          &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+          }
   
           .mission-heading,
           .vision-heading {
-            font-family: 'Poppins', sans-serif;
-            font-size: 1.5rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
             font-weight: 600;
-            color: #003399;
-            margin-bottom: 1rem;
+            color: var(--text-color);
+            margin-bottom: 20px;
+            position: relative;
+            padding-left: 15px;
           }
   
           .mission-text,
           .vision-text {
-            font-family: 'Open Sans', sans-serif;
-            font-size: 0.9rem;
-            color: #666; 
-            line-height: 1.6;
+            font-size: 1rem;
+            color: var(--light-text);
+            line-height: 1.8;
+            padding-left: 15px;
+          }
+        }
+      }
+      
+      // Xidmətlərimiz bölməsi
+      .about-services {
+        margin-bottom: 60px;
+        
+        .services-heading {
+          font-family: "Playfair Display", serif;
+          font-size: 2rem;
+          font-weight: 600;
+          color: var(--text-color);
+          margin-bottom: 40px;
+          text-align: center;
+          position: relative;
+          
+          &:after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary-color);
+          }
+        }
+        
+        .services-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 25px;
+          
+          .service-card {
+            background-color: #fff;
+            padding: 30px 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            text-align: center;
+            transition: var(--transition);
+            
+            &:hover {
+              transform: translateY(-10px);
+              box-shadow: var(--card-shadow-hover);
+            }
+            
+            .service-icon {
+              font-size: 3rem;
+              margin-bottom: 20px;
+              display: inline-block;
+              background: linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.2) 100%);
+              width: 80px;
+              height: 80px;
+              border-radius: 50%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              margin: 0 auto 20px;
+              box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            }
+            
+            .service-title {
+              font-family: "Playfair Display", serif;
+              font-size: 1.3rem;
+              font-weight: 600;
+              color: var(--text-color);
+              margin-bottom: 15px;
+            }
+            
+            .service-description {
+              font-size: 0.95rem;
+              color: var(--light-text);
+              line-height: 1.6;
+            }
+          }
+        }
+      }
+      
+      // Komanda bölməsi
+      .about-team {
+        margin-bottom: 60px;
+        
+        .team-heading {
+          font-family: "Playfair Display", serif;
+          font-size: 2rem;
+          font-weight: 600;
+          color: var(--text-color);
+          margin-bottom: 40px;
+          text-align: center;
+          position: relative;
+          
+          &:after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary-color);
+          }
+        }
+        
+        .team-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+          gap: 25px;
+          
+          .team-member {
+            background-color: #fff;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            text-align: center;
+            transition: var(--transition);
+            
+            &:hover {
+              transform: translateY(-10px);
+              box-shadow: var(--card-shadow-hover);
+            }
+            
+            .member-photo {
+              height: 180px;
+              background-color: #e0e0e0;
+              position: relative;
+              overflow: hidden;
+              background-image: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+              opacity: 0.8;
+              
+              &:after {
+                content: '👤';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font-size: 4rem;
+                color: rgba(255,255,255,0.8);
+              }
+            }
+            
+            .member-name {
+              font-family: "Playfair Display", serif;
+              font-size: 1.2rem;
+              font-weight: 600;
+              color: var(--text-color);
+              margin: 20px 0 5px;
+              padding: 0 15px;
+            }
+            
+            .member-position {
+              font-size: 0.9rem;
+              font-weight: 500;
+              color: var(--primary-color);
+              margin-bottom: 10px;
+            }
+            
+            .member-bio {
+              font-size: 0.9rem;
+              color: var(--light-text);
+              padding: 0 15px 20px;
+              line-height: 1.5;
+            }
+          }
+        }
+      }
+      
+      // Nailiyyətlər bölməsi
+      .about-achievements {
+        margin-bottom: 60px;
+        
+        .achievements-heading {
+          font-family: "Playfair Display", serif;
+          font-size: 2rem;
+          font-weight: 600;
+          color: var(--text-color);
+          margin-bottom: 40px;
+          text-align: center;
+          position: relative;
+          
+          &:after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary-color);
+          }
+        }
+        
+        .achievements-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+          gap: 20px;
+          
+          .achievement-card {
+            background: white;
+            padding: 30px 20px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            
+            &:hover {
+              transform: translateY(-8px);
+              box-shadow: var(--card-shadow-hover);
+            }
+            
+            .achievement-number {
+              font-size: 2.5rem;
+              font-weight: 700;
+              color: var(--primary-color);
+              margin-bottom: 10px;
+              background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+            }
+            
+            .achievement-text {
+              font-size: 1rem;
+              color: var(--text-color);
+              font-weight: 500;
+            }
           }
         }
       }
 
       .about-contact {
         background-color: #fff; 
-        padding: 2rem;
-        border-radius: 8px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+        padding: 40px;
+        border-radius: var(--border-radius);
+        box-shadow: var(--card-shadow);
+        transition: var(--transition);
+        
+        &:hover {
+          box-shadow: var(--card-shadow-hover);
+        }
   
         .contact-heading {
-          font-family: 'Poppins', sans-serif;
-          font-size: 1.5rem;
+          font-family: 'Playfair Display', serif;
+          font-size: 1.8rem;
           font-weight: 600;
-          color: #003399; 
-          margin-bottom: 1.5rem;
+          color: var(--text-color);
+          margin-bottom: 25px;
+          position: relative;
+          
+          &:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--primary-color);
+          }
         }
   
         .contact-list {
           list-style: none;
           padding: 0;
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 20px;
   
           .contact-item {
             display: flex;
             align-items: center;
-            gap: 0.5rem; 
-            margin-bottom: 1rem;
-            font-family: 'Open Sans', sans-serif;
-            font-size: 1rem;
-            color: #333; 
+            gap: 15px;
+            padding: 15px;
+            background-color: var(--light-bg);
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            
+            &:hover {
+              transform: translateX(5px);
+            }
   
             .contact-icon {
-              width: 20px; 
-              height: 20px;
-              fill: #003399;
+              width: 24px;
+              height: 24px;
+              fill: var(--primary-color);
+            }
+            
+            .contact-info {
+              font-size: 1rem;
+              color: var(--text-color);
+              
+              a {
+                color: var(--text-color);
+                text-decoration: none;
+                transition: var(--transition);
+                
+                &:hover {
+                  color: var(--primary-color);
+                }
+              }
+              
+              .social-links {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+                
+                a {
+                  color: var(--text-color);
+                  text-decoration: none;
+                  transition: var(--transition);
+                  
+                  &:hover {
+                    color: var(--primary-color);
+                  }
+                }
+              }
             }
           }
         }

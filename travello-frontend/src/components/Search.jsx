@@ -1,5 +1,5 @@
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useEffect, useState } from "react";
 
 const Search = ({ setResultData }) => {
   const [regions, setRegions] = useState([]);
@@ -11,9 +11,11 @@ const Search = ({ setResultData }) => {
   const [selectedRegion, setSelectedRegion] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedRating, setSelectedRating] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSearching(true);
 
     try {
       const filterResponse = await axios.get(
@@ -55,8 +57,11 @@ const Search = ({ setResultData }) => {
         setFinalResults(intersection);
         setResultData(intersection);
       }
+      
+      setIsSearching(false);
     } catch (error) {
       console.error(error);
+      setIsSearching(false);
     }
   };
 
@@ -73,57 +78,71 @@ const Search = ({ setResultData }) => {
   }, []);
 
   return (
-    <section className="search-section">
-      <div className="container">
-        <form onSubmit={handleSubmit}>
+    <div className="search-container">
+      <form className="search-form" onSubmit={handleSubmit}>
+        <div className="search-input-wrapper">
+          <span className="search-icon">🔍</span>
           <input
-            className="search-input"
             type="text"
+            className="search-input"
             placeholder="Məkan axtar..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <div className="filters">
-            <select
-              onChange={(e) => setSelectedRegion(e.target.value)}
-              className="filter-regions"
-            >
-              <option value="">Bütün Regionlar</option>
-              {regions.map((region) => (
-                <option value={region.id} key={region.id}>
-                  {region.name}
-                </option>
-              ))}
-            </select>
-
-            <select
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              className="filter-categories"
-            >
-              <option value="">Bütün Kateqoriyalar</option>
-              {categories.map((category) => (
-                <option value={category.id} key={category.id}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
-
-            <select
-              onChange={(e) => setSelectedRating(e.target.value)}
-              className="filter-ratings"
-            >
-              <option value="">Bütün Reytinqlər</option>
-              <option value="0">0 - 1</option>
-              <option value="1">1 - 2</option>
-              <option value="2">2 - 3</option>
-              <option value="3">3 - 4</option>
-              <option value="4">4 +</option>
-            </select>
-            <button type="submit">Axtar</button>
-          </div>
-        </form>
-      </div>
-    </section>
+        </div>
+        
+        <select
+          value={selectedRegion}
+          onChange={(e) => setSelectedRegion(e.target.value)}
+          className="filter-select"
+        >
+          <option value="">Bütün Regionlar</option>
+          {regions.map((region) => (
+            <option value={region.id} key={region.id}>
+              {region.name}
+            </option>
+          ))}
+        </select>
+        
+        <select
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+          className="filter-select"
+        >
+          <option value="">Bütün Kateqoriyalar</option>
+          {categories.map((category) => (
+            <option value={category.id} key={category.id}>
+              {category.name}
+            </option>
+          ))}
+        </select>
+        
+        <select
+          value={selectedRating}
+          onChange={(e) => setSelectedRating(e.target.value)}
+          className="filter-select"
+        >
+          <option value="">Bütün Reytinqlər</option>
+          <option value="0">0 - 1</option>
+          <option value="1">1 - 2</option>
+          <option value="2">2 - 3</option>
+          <option value="3">3 - 4</option>
+          <option value="4">4 +</option>
+        </select>
+        
+        <button
+          type="submit"
+          className={`search-button ${isSearching ? 'searching' : ''}`}
+          disabled={isSearching}
+        >
+          {isSearching ? (
+            <span className="search-spinner"></span>
+          ) : (
+            "Axtar"
+          )}
+        </button>
+      </form>
+    </div>
   );
 };
 
