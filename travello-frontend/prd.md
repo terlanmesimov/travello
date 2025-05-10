@@ -95,3 +95,33 @@ Hədəf auditoriya:
 5. Sosial media inteqrasiyası
 6. Məkanlar üçün real vaxtda məlumat yeniləmələri
 7. AI tövsiyə sistemi 
+
+## Layihə Strukturu
+
+Travello, səyahət məkanlarını axtarmaq və planlaşdırmaq üçün React-da yazılmış veb tətbiqdir.
+
+### Əsas Fayl Strukturu:
+- **src/components**: Header, Footer, Search, PlaceGrid və Map
+- **src/pages**: Home, Login, Register, About, Blog, BlogDetail, Favorites, CardDetail, Account, NotFound, ResetPassword
+- **src/routes**: GlobalProvider və PrivateRoute
+- **src/utils**: Yardımçı funksiyalar
+- **src/assets**: Şəkillər və üslub faylları
+
+### Əsas Marşrutlar:
+- `/` - Ana səhifə
+- `/login` - Giriş
+- `/register` - Qeydiyyat
+- `/reset-password` - Şifrə sıfırlama
+- `/account` - İstifadəçi profili
+- `/favorites` - İstifadəçinin sevimli yerləri
+- `/blog` - Blog yazıları siyahısı 
+- `/blog-detail/:id` - Blog yazısının təfərrüatları
+- `/card-detail/:id` - Məkan təfərrüatları
+- `/about` - Haqqımızda səhifəsi
+
+## Növbəti Addımlar
+
+1. Xəritə funksionallığının təkmilləşdirilməsi
+2. API inteqrasiyası və veri strukturunun optimallaşdırılması
+3. Responsiv dizaynın təkmilləşdirilməsi
+4. Autentifikasiya sisteminin gücləndirilməsi 
