@@ -24,6 +24,19 @@ const CardDetail = () => {
     formState: { errors },
   } = useForm();
 
+  const calculateAverageRating = useCallback((commentsList) => {
+    if (!commentsList || commentsList.length === 0) return 0;
+    const sum = commentsList.reduce((acc, comment) => acc + comment.rating, 0);
+    return (sum / commentsList.length).toFixed(1);
+  }, []);
+
+  const updatePlaceWithNewRating = useCallback((newRating) => {
+    setPlaceData((prev) => ({
+      ...prev,
+      rating: newRating,
+    }));
+  }, []);
+
   const openEditModal = (comment) => {
     setCurrentComment(comment);
     setIsEditing(true);
@@ -34,12 +47,17 @@ const CardDetail = () => {
       const response = await axios.get(
         `${process.env.REACT_APP_REST_API_URL}/place/get/${id}`
       );
-      setPlaceData(response.data);
-      setComments(response.data.comments);
+      const data = response.data;
+      const avgRating = calculateAverageRating(data.comments);
+      setPlaceData({
+        ...data,
+        rating: avgRating,
+      });
+      setComments(data.comments);
     } catch (error) {
       navigate("*");
     }
-  }, [id, navigate]);
+  }, [id, navigate, calculateAverageRating]);
 
   const addFavorites = async () => {
     const token = localStorage.getItem("token");
@@ -101,7 +119,7 @@ const CardDetail = () => {
           `${process.env.REACT_APP_REST_API_URL}/place/add-comment`,
           {
             text: data.comment,
-            rating: data.rating,
+            rating: Number(data.rating),
             createdAt: null,
             placeId: id,
             blogId: null,
@@ -113,7 +131,10 @@ const CardDetail = () => {
           }
         );
         const newComment = response.data;
-        setComments([newComment, ...comments]);
+        const updatedComments = [newComment, ...comments];
+        setComments(updatedComments);
+        const newRating = calculateAverageRating(updatedComments);
+        updatePlaceWithNewRating(newRating);
       } catch (error) {
         console.log(error);
       }
@@ -125,6 +146,40 @@ const CardDetail = () => {
     fetchPlaceData();
     checkFavoriteState();
   }, [fetchPlaceData, checkFavoriteState]);
+
+  const shareOnFacebook = () => {
+    const url = window.location.href;
+    window.open(
+      `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
+      "_blank"
+    );
+  };
+
+  const shareOnTwitter = () => {
+    const url = window.location.href;
+    const text = `${placeData.name} - Travello`;
+    window.open(
+      `https://twitter.com/intent/tweet?url=${encodeURIComponent(
+        url
+      )}&text=${encodeURIComponent(text)}`,
+      "_blank"
+    );
+  };
+
+  const shareOnLinkedIn = () => {
+    const url = window.location.href;
+    window.open(
+      `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+        url
+      )}`,
+      "_blank"
+    );
+  };
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(window.location.href);
+    alert("Link kopyalandı!");
+  };
 
   return (
     <>
@@ -149,6 +204,34 @@ const CardDetail = () => {
           <div className="place-info">
             <h1 className="place-title">{placeData.name}</h1>
             <p className="place-description">{placeData.description}</p>
+
+            <div className="share-buttons">
+              <h3 className="share-title">Paylaş</h3>
+              <div className="social-buttons">
+                <button
+                  onClick={shareOnFacebook}
+                  className="share-button facebook"
+                >
+                  <i className="fab fa-facebook-f"></i>
+                </button>
+                <button
+                  onClick={shareOnTwitter}
+                  className="share-button twitter"
+                >
+                  <i className="fab fa-twitter"></i>
+                </button>
+                <button
+                  onClick={shareOnLinkedIn}
+                  className="share-button linkedin"
+                >
+                  <i className="fab fa-linkedin-in"></i>
+                </button>
+                <button onClick={copyToClipboard} className="share-button copy">
+                  <i className="fas fa-link"></i>
+                </button>
+              </div>
+            </div>
+
             <div className="place-rating">
               <span className="rating-stars">
                 <RenderStars rating={placeData.rating ? placeData.rating : 0} />
@@ -177,7 +260,11 @@ const CardDetail = () => {
                 ]}
                 zoom={15}
                 scrollWheelZoom={false}
-                style={{ height: "400px", width: "100%", borderRadius: "8px" }}
+                style={{
+                  height: "400px",
+                  width: "100%",
+                  borderRadius: "8px",
+                }}
               >
                 <TileLayer
                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -192,6 +279,24 @@ const CardDetail = () => {
                   <Popup>{placeData.name}</Popup>
                 </Marker>
               </MapContainer>
+            </div>
+          )}
+
+          {placeData.location && (
+            <div className="street-view">
+              <h2 className="map-title">Street View</h2>
+              <iframe
+                title={`Street View of ${placeData.name}`}
+                width="100%"
+                height="400"
+                style={{ borderRadius: "8px" }}
+                loading="lazy"
+                allowFullScreen
+                referrerPolicy="no-referrer-when-downgrade"
+                src={`https://www.google.com/maps/embed?pb=!4v${Date.now()}!6m8!1m7!1sCAoSLEFGMVFpcFBQYm5WblY4M0lZV3RPRnVjdVFaMXl3WmtmcnJHUGRCUzZ1TWUx!2m2!1d${
+                  placeData.location.latitude
+                }!2d${placeData.location.longitude}!3f0!4f0!5f1.2`}
+              ></iframe>
             </div>
           )}
 

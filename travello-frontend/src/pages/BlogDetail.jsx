@@ -67,6 +67,38 @@ const BlogDetail = () => {
     }
   };
 
+  const shareOnFacebook = () => {
+    const url = window.location.href;
+    window.open(
+      `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
+      "_blank"
+    );
+  };
+
+  const shareOnTwitter = () => {
+    const url = window.location.href;
+    const text = `${blogData.name} - Travello Blog`;
+    window.open(
+      `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(
+        text
+      )}`,
+      "_blank"
+    );
+  };
+
+  const shareOnLinkedIn = () => {
+    const url = window.location.href;
+    window.open(
+      `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
+      "_blank"
+    );
+  };
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(window.location.href);
+    alert("Link kopyalandı!");
+  };
+
   useEffect(() => {
     fetchBlogData();
   }, [fetchBlogData]);
@@ -85,6 +117,37 @@ const BlogDetail = () => {
                 {blogData.createdAt?.split("T").join(" ").substring(0, 10)}
               </span>
             </p>
+
+            <div className="share-buttons">
+              <h3 className="share-title">Paylaş</h3>
+              <div className="social-buttons">
+                <button
+                  onClick={shareOnFacebook}
+                  className="share-button facebook"
+                >
+                  <i className="fab fa-facebook-f"></i>
+                </button>
+                <button
+                  onClick={shareOnTwitter}
+                  className="share-button twitter"
+                >
+                  <i className="fab fa-twitter"></i>
+                </button>
+                <button
+                  onClick={shareOnLinkedIn}
+                  className="share-button linkedin"
+                >
+                  <i className="fab fa-linkedin-in"></i>
+                </button>
+                <button
+                  onClick={copyToClipboard}
+                  className="share-button copy"
+                >
+                  <i className="fas fa-link"></i>
+                </button>
+              </div>
+            </div>
+
             <img
               src={
                 blogData.imageBase64 &&
