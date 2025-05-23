@@ -41,12 +41,13 @@ const Search = ({ setResultData }) => {
 
       setFilterResults(filterData);
       setSearchResults(searchData);
+
       if (
         [searchQuery, selectedCategory, selectedRating, selectedRegion].every(
           (state) => state.length === 0
         )
       ) {
-        setResultData([]);
+        setResultData(null);
       } else if (searchQuery.length === 0) {
         setFinalResults(filterData);
         setResultData(filterData);
@@ -55,9 +56,13 @@ const Search = ({ setResultData }) => {
           searchData.some((s) => s.id === place.id)
         );
         setFinalResults(intersection);
-        setResultData(intersection);
+        if (intersection.length !== 0) {
+          setResultData(intersection);
+        } else {
+          setResultData(null);
+        }
       }
-      
+
       setIsSearching(false);
     } catch (error) {
       console.error(error);
@@ -90,7 +95,7 @@ const Search = ({ setResultData }) => {
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
-        
+
         <select
           value={selectedRegion}
           onChange={(e) => setSelectedRegion(e.target.value)}
@@ -103,7 +108,7 @@ const Search = ({ setResultData }) => {
             </option>
           ))}
         </select>
-        
+
         <select
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value)}
@@ -116,7 +121,7 @@ const Search = ({ setResultData }) => {
             </option>
           ))}
         </select>
-        
+
         <select
           value={selectedRating}
           onChange={(e) => setSelectedRating(e.target.value)}
@@ -129,17 +134,13 @@ const Search = ({ setResultData }) => {
           <option value="3">3 - 4</option>
           <option value="4">4 +</option>
         </select>
-        
+
         <button
           type="submit"
-          className={`search-button ${isSearching ? 'searching' : ''}`}
+          className={`search-button ${isSearching ? "searching" : ""}`}
           disabled={isSearching}
         >
-          {isSearching ? (
-            <span className="search-spinner"></span>
-          ) : (
-            "Axtar"
-          )}
+          {isSearching ? <span className="search-spinner"></span> : "Axtar"}
         </button>
       </form>
     </div>
